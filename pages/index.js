@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>TFG self sovering identity</title>
+        <title>TFG self soverign identity</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header />
