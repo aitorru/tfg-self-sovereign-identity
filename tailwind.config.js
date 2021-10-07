@@ -8,6 +8,8 @@ module.exports = {
   variants: {
     extend: {
       padding: ['hover'],
+      translate: ['hover'],
+      width: ['hover']
 
     },
   },
