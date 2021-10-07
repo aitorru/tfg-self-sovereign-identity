@@ -2,6 +2,7 @@ import { useWeb3React } from '@web3-react/core'
 
 export default function Login() {
     const web3React = useWeb3React();
+    console.log(web3React);
 
     return (
         <div className="h-full min-h-screen flex flex-col justify-center">
