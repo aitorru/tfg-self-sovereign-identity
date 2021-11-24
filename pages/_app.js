@@ -1,12 +1,11 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css'
 import { Web3ReactProvider } from '@web3-react/core'
-import { Web3Provider } from '@ethersproject/providers'
+var Web3 = require('web3');
 
 function MyApp({ Component, pageProps }) {
   function getLibrary(provider) {
-    const library = new Web3Provider(provider)
-    library.pollingInterval = 12000
+    const library = new Web3(provider);
     return library
   }
   return <Web3ReactProvider getLibrary={getLibrary}><Component {...pageProps} /></Web3ReactProvider>
