@@ -25,18 +25,11 @@ export default function Login() {
     }
     const sendReqToBlockChain = async () => {
         const ethers = library;
-        Contract.setProvider(ethers);
-        // Retrive the 
-        var contract = new Contract(jsonInterface['abi'], '0xb63d437c7d969CF20EaCF000Cc02C66d4b8C982c'); // TODO: the jsonInterface has the contract address
-        //await contract.methods.emitAll("hola", "mundo").send({ from: account, gasPrice: 21000 });
-        var result = await contract.methods.retriveAll().send({ from: account, gasPrice: 21000 });
-        console.log(result);
-    }
-    const uploadSaltNPepperToBlockchain = () => {
-        const ethers = library;
-        Contract.setProvider(ethers);
-        // Retrive the 
-        var contract = new Contract(jsonInterface['abi'], '0xb63d437c7d969CF20EaCF000Cc02C66d4b8C982c');
+        ethers.eth.sign("Hola mundo", account).then(
+            r => {
+                console.log(r);
+            }
+        );
     }
 
     useEffect(() => {
