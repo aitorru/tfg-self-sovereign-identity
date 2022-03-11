@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> SSI implementation over the Sovrin Network using Next.js
+> SSI implementation over the Ethereum Network using Next.js
 
 ## Install
 
