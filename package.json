@@ -20,12 +20,16 @@
     "ethereumjs-util": "^7.1.4",
     "ethr-did": "^2.2.0",
     "ethr-did-resolver": "^5.0.4",
+    "ipfs": "^0.62.1",
     "next": "12.0.10",
+    "orbit-db": "^0.28.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-ipfs": "^0.3.1",
     "secp256k1": "^4.0.3",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
+    "uuid": "^8.3.2",
     "web3": "^1.7.0"
   },
   "devDependencies": {
