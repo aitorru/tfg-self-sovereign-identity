@@ -32,6 +32,10 @@ module.exports = {
 		'semi': [
 			'warn',
 			'always'
+		],
+		'key-spacing': [
+			'warn',
+			{ 'mode': 'minimum' }
 		]
 	}
 };

@@ -41,3 +41,12 @@ export function encrypt(data, publicKey) {
 	return buffer;
 }
 
+export function readfile(file){
+	return new Promise((resolve) => {
+		var fr = new FileReader();  
+		fr.onload = () => {
+			resolve(fr.result);
+		};
+		fr.readAsArrayBuffer(file);
+	});
+}
