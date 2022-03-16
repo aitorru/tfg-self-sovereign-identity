@@ -34,7 +34,7 @@ export function encrypt(data, publicKey) {
 		ephemPublicKey: naclUtil.encodeBase64(ephemeralKeyPair.publicKey),
 		ciphertext: naclUtil.encodeBase64(encryptedMessage),
 	};
-		// Convert it to a String for a hex convert
+	// Convert it to a String for a hex convert
 	const strigified = JSON.stringify(output);
 	// Create a buffer and pass it to metamask
 	const buffer = Buffer.from(strigified, 'utf8');

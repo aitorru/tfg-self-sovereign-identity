@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import Header from '../components/header';
 import { useState, useEffect, createRef } from 'react';
+// import { useCallbackRef } from 'use-callback-ref';
 import Head from 'next/head';
 import MainButton from '../components/button';
 import useAppContext from '../context';
@@ -11,14 +12,17 @@ const OrbitDB = require('orbit-db');
 
 
 export default function Upload() {
-	let db = null;
 	const [ inputValue, setInputValue ] = useState('');
 	const [ address, setAddress ] = useState('');
 	const [ connectionActive, setConnectionActive ] = useState(false);
-	const [ peers, setPeers ] = useState({});
+	// 😵‍💫🤞 https://stackoverflow.com/questions/66670473/usestate-not-re-rendering-component-if-it-is-called-inside-callback-function
+	// const [,forceUpdate] = useState();
+	// const peers = useCallbackRef({}, () => forceUpdate());
+	// console.log('RENDER');
+	const [peers, setPeers] = useState({});
 	const [selectedAddress, setSelectedAddress] = useState('');
 	const imageUpload = createRef();
-	const { ipfs, setIpfs, DID } = useAppContext();
+	const { ipfs, setIpfs, DID, DB, setDB } = useAppContext();
 	const handleInputChange = (event) => {
 		setInputValue(event.target.value);
 	};
@@ -29,8 +33,9 @@ export default function Upload() {
 	useEffect(async () => {
 		// Connect to ipfs
 		if(!ipfs) {
-			const ipfsOptions = { 
+			const ipfsOptions = {
 				repo: '/ipfs/tfg',
+				gategay: '/ip4/127.0.0.1/tcp/5001',
 				start: true,
 				EXPERIMENTAL: {
 					pubsub: true,
@@ -38,19 +43,49 @@ export default function Upload() {
 				config: {
 					Addresses: {
 						Swarm: [
-							'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/'
+							'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/',
+							'/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
+							'/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
+							'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
+							'/ip4/0.0.0.0/tcp/4001',
+							'/ip6/::/tcp/4001',
+							'/ip4/0.0.0.0/udp/4001/quic',
+							'/ip6/::/udp/4001/quic'
 						]
 					},
 				}
 			};
 			const ipfs_local = await IPFS.create(ipfsOptions);
-			setIpfs(ipfs_local);	
+
+			setIpfs(ipfs_local);
 		}
 		
 	}, []);
 
+	useEffect(() => {
+		if(!DB) return;
+		// When the database is ready (ie. loaded), display results
+		DB.events.on('ready', () => {
+			console.log('Ready ev');
+			console.log(peers);
+			setPeers(() => DB.all);
+		});
+		// When database gets replicated with a peer, display results
+		DB.events.on('replicated', () => {
+			console.log('Replicated ev');
+			setPeers(() => DB.all);
+
+		});
+		// When we update the database, display result
+		DB.events.on('write', (address, entry, heads) => {
+			console.log('Write ev', address, entry, heads);
+			setPeers(() => DB.all);
+
+		});
+	}, [DB]);
+
 	const handleCreateDB = async () => {
-		if(db || !ipfs) return;
+		if(!ipfs) return;
 		
 		// Create instance
 		// Mantain connection to pesist data
@@ -62,19 +97,14 @@ export default function Upload() {
 			}
 		};
 		// Create key value db
-		db = await orbitdb.keyvalue(account, options);
+		const db = await orbitdb.keyvalue(account, options);
+		setDB(db);
 		// Replicate db in local storage
 		await db.load();
 		// Change UI after connection
 		setConnectionActive(true);
 		// Update UI
 		setAddress(db.address.toString());
-		// When the database is ready (ie. loaded), display results
-		db.events.on('ready', () => handlePeersUpdate());
-		// When database gets replicated with a peer, display results
-		db.events.on('replicated', () => handlePeersUpdate());
-		// When we update the database, display result
-		db.events.on('write', () => handlePeersUpdate());
 		// Obtain DID from global context and upload it
 		const DID_safe = DID;
 		Object.keys(DID_safe).forEach(key => DID_safe[key] === undefined ? delete DID_safe[key] : {});
@@ -87,33 +117,21 @@ export default function Upload() {
 			// Create instance
 			const orbitdb = await OrbitDB.createInstance(ipfs);
 			// Connect to remote db
-			db = await orbitdb.open(inputValue);
+			const db = await orbitdb.open(inputValue);
+			setDB(db);
 			// Replicate db in local storage
 			await db.load();
 			// Change UI after connection
 			setConnectionActive(true);
-			// Update UI (just because)
+			// Update UI
 			setAddress(db.address.toString());
-			// When the database is ready (ie. loaded), display results
-			db.events.on('ready', () => handlePeersUpdate());
-			// When database gets replicated with a peer, display results
-			db.events.on('replicated', () => handlePeersUpdate());
-			// When we update the database, display result
-			db.events.on('write', () => handlePeersUpdate());
-			
-
 			// Retrive a safe DID and upload it
 			const DID_safe = DID;
 			Object.keys(DID_safe).forEach(key => DID_safe[key] === undefined ? delete DID_safe[key] : {});
 			await db.put(account, DID_safe);
-			console.log(db.all);
 		} catch (error) {
 			console.error(error);
 		}
-	};
-
-	const handlePeersUpdate = async () => {
-		setPeers(db.all);
 	};
 
 	const handleFileEncryptAndUpload = async () => {
@@ -129,9 +147,10 @@ export default function Upload() {
 		
 		const fileBytesArray = new Uint8Array(fileBytes);
 
-		var pbkdf2iterations=10000;
-		var passphrasebytes=new TextEncoder('utf-8').encode(syncKey);
-		var pbkdf2salt=window.crypto.getRandomValues(new Uint8Array(8));
+		var pbkdf2iterations = 10000;
+		// Use the sync Key for file encryption
+		var passphrasebytes = new TextEncoder('utf-8').encode(syncKey);
+		var pbkdf2salt = window.crypto.getRandomValues(new Uint8Array(8));
 
 
 		var passphrasekey = await window.crypto.subtle.importKey('raw', passphrasebytes, {name: 'PBKDF2'}, false, ['deriveBits'])
@@ -164,16 +183,82 @@ export default function Upload() {
 		console.log('plaintext encrypted');
 		cipherbytes = new Uint8Array(cipherbytes);
 
-		var resultbytes = new Uint8Array(cipherbytes.length+16);
+		var resultbytes = new Uint8Array(cipherbytes.length + 16);
 		resultbytes.set(new TextEncoder('utf-8').encode('Salted__'));
 		resultbytes.set(pbkdf2salt, 8);
 		resultbytes.set(cipherbytes, 16);
 
-		var blob = new Blob([resultbytes], {type: 'application/download'});
-		var blobUrl=URL.createObjectURL(blob);
+		const file = await ipfs.add({content: resultbytes});
+		const payload = {
+			ipfsFile: file, // It might contain undefined
+			hexOfSyncKey: encryptedSyncKey.toString('hex'),
+			fileName: objFile.name,
+		};
+		Object.keys(payload.ipfsFile).forEach(key => payload.ipfsFile[key] === undefined ? delete payload.ipfsFile[key] : {});
+		console.log(payload);
+		await DB.put('to' + selectedAddress + '-' + window.crypto.randomUUID(), payload);
+	};
 
-		console.log(encryptedSyncKey.toString('hex'), blobUrl);
+	const handleFileDownload = async (file, hexToDecrypt, fileName) => {
+		const syncKey = await window.ethereum
+			.request(
+				{
+					method: 'eth_decrypt',
+					params: [hexToDecrypt, account]
+				}
+			);
+		console.log(syncKey);
+		const stream = ipfs.cat(file.path);
+		let data = new Uint8Array();
 
+		for await (const chunk of stream) {
+			// chunks of data are returned as a Buffer, convert it back to a string
+			data = new Uint8Array([...data, ...chunk]);
+		}
+		console.log(data);
+		var cipherbytes = data;
+		var pbkdf2iterations = 10000;
+		var passphrasebytes = new TextEncoder('utf-8').encode(syncKey);
+		var pbkdf2salt = cipherbytes.slice(8,16);
+
+
+		var passphrasekey = await window.crypto.subtle.importKey('raw', passphrasebytes, {name: 'PBKDF2'}, false, ['deriveBits'])
+			.catch(function(err){
+				console.error(err);
+
+			});
+		console.log('passphrasekey imported');
+
+		var pbkdf2bytes = await window.crypto.subtle.deriveBits({'name': 'PBKDF2', 'salt': pbkdf2salt, 'iterations': pbkdf2iterations, 'hash': 'SHA-256'}, passphrasekey, 384)		
+			.catch(function(err){
+				console.error(err);
+			});
+		console.log('pbkdf2bytes derived');
+		pbkdf2bytes = new Uint8Array(pbkdf2bytes);
+
+		let keybytes = pbkdf2bytes.slice(0,32);
+		let ivbytes = pbkdf2bytes.slice(32);
+		cipherbytes = cipherbytes.slice(16);
+
+		var key = await window.crypto.subtle.importKey('raw', keybytes, {name: 'AES-CBC', length: 256}, false, ['decrypt']) 
+			.catch(function(err){
+				console.error(err);
+			});
+		console.log('key imported');		
+
+		var plaintextbytes = await window.crypto.subtle.decrypt({name: 'AES-CBC', iv: ivbytes}, key, cipherbytes)
+			.catch(function(err){
+				console.error(err);
+			});
+		console.log('ciphertext decrypted');
+		plaintextbytes = new Uint8Array(plaintextbytes);
+
+		var blob = new Blob([plaintextbytes], {type: 'application/download'});
+		var blobUrl = URL.createObjectURL(blob);
+		console.log(blobUrl);
+		var FileSaver = require('file-saver');
+		FileSaver.saveAs(blobUrl, fileName);
+		
 	};
 
 	// TODO: Delete buttons when connected to orbit db
@@ -209,7 +294,8 @@ export default function Upload() {
 					{
 						// Its a JSON, not an array so we do this
 						Object.keys(peers).map(
-							(k) => {
+							(k) => { 
+								if(!k.startsWith('0x')) return null;
 								return <h1
 									onClick={() => {
 										setSelectedAddress(peers[k].address);
@@ -242,7 +328,26 @@ export default function Upload() {
 							/>
 						</div>
 				}
-				
+				{connectionActive && <h1 className='text-center text-4xl mt-3'>Download zone</h1>}
+				<div className='flex flex-row gap-5 overflow-x-auto'>
+					{
+						// Its a JSON, not an array so we do this
+						Object.keys(peers).map(
+							(k) => {
+								if(!k.startsWith('to')) return null;
+								if(!k.startsWith('to' + account)) return null;
+								return <h1
+									onClick={() => {
+										handleFileDownload(peers[k].ipfsFile, peers[k].hexOfSyncKey, peers[k].fileName);
+									}}
+									className='rounded-lg px-4 py-2 transition-all bg-blue-200 cursor-pointer hover:bg-blue-300'
+									key={peers[k].ipfsFile.path}>
+									{peers[k].fileName}
+								</h1>;
+							}
+						)
+					}
+				</div>
 			</div>
 		</>
 	);

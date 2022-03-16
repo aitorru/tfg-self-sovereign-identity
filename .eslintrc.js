@@ -36,6 +36,7 @@ module.exports = {
 		'key-spacing': [
 			'warn',
 			{ 'mode': 'minimum' }
-		]
+		],
+		'space-infix-ops': ['error', { 'int32Hint': false }]
 	}
 };

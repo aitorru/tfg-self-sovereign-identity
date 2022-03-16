@@ -13,11 +13,13 @@ function MyApp({ Component, pageProps }) {
 		const library = new Web3(provider);
 		return library;
 	}
-	return <Web3ReactProvider getLibrary={getLibrary} libraryName={'web3.js'}>
-		<AppContextProvider>
-			<Component {...pageProps} />
-		</AppContextProvider>
-	</Web3ReactProvider>;
+	return <React.StrictMode>
+		<Web3ReactProvider getLibrary={getLibrary} libraryName={'web3.js'}>
+			<AppContextProvider>
+				<Component {...pageProps} />
+			</AppContextProvider>
+		</Web3ReactProvider>
+	</React.StrictMode>;
 }
 
 export default MyApp;

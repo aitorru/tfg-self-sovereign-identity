@@ -7,7 +7,7 @@ export const AppContext = createContext(null);
 export const AppContextProvider = ({ children }) => {
 	const [DID, setDID] = React.useState(false);
 	const [ipfs, setIpfs] = React.useState(false);
-	const [db, setDB] = React.useState(false);
+	const [DB, setDB] = React.useState(false);
 
 	//ComponentDidMouunt
 	React.useEffect(() => {
@@ -21,11 +21,11 @@ export const AppContextProvider = ({ children }) => {
 			setDID,
 			ipfs,
 			setIpfs,
-			db,
+			DB,
 			setDB
 		}),
 	[
-		DID, ipfs, db]);   // States que serán visibles en el contexto.
+		DID, ipfs, DB]);   // States que serán visibles en el contexto.
 
 	// Interface donde será expuesto como proveedor y envolverá la App.
 	return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
