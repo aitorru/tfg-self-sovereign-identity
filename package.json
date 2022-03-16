@@ -27,6 +27,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-ipfs": "^0.3.1",
+    "react-query": "^3.34.16",
     "secp256k1": "^4.0.3",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",

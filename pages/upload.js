@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import Header from '../components/header';
-import { useState, useEffect, createRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // import { useCallbackRef } from 'use-callback-ref';
 import Head from 'next/head';
 import MainButton from '../components/button';
@@ -18,10 +18,9 @@ export default function Upload() {
 	// 😵‍💫🤞 https://stackoverflow.com/questions/66670473/usestate-not-re-rendering-component-if-it-is-called-inside-callback-function
 	// const [,forceUpdate] = useState();
 	// const peers = useCallbackRef({}, () => forceUpdate());
-	// console.log('RENDER');
-	const [peers, setPeers] = useState({});
+	const [ peers, setPeers ] = useState({});
 	const [selectedAddress, setSelectedAddress] = useState('');
-	const imageUpload = createRef();
+	const imageUpload = useRef();
 	const { ipfs, setIpfs, DID, DB, setDB } = useAppContext();
 	const handleInputChange = (event) => {
 		setInputValue(event.target.value);
@@ -66,21 +65,25 @@ export default function Upload() {
 		if(!DB) return;
 		// When the database is ready (ie. loaded), display results
 		DB.events.on('ready', () => {
-			console.log('Ready ev');
-			console.log(peers);
-			setPeers(() => DB.all);
+			setPeers({...DB.all});
 		});
 		// When database gets replicated with a peer, display results
 		DB.events.on('replicated', () => {
-			console.log('Replicated ev');
-			setPeers(() => DB.all);
-
+			/**
+			* https://blog.logrocket.com/how-when-to-force-react-component-re-render/
+			* React evaluates state changes by checking its shallow equality (or reference 
+			* equality), which checks to see if both the preview and new value for state 
+			* reference the same object. In our example, we updated one of the properties of the
+			* user object, but we technically made setUser the same object reference, and 
+			* thus, React didn’t perceive any change in its state.
+			* 
+			* https://reactjs.org/docs/react-component.html#state
+			*/
+			setPeers({...DB.all});
 		});
 		// When we update the database, display result
-		DB.events.on('write', (address, entry, heads) => {
-			console.log('Write ev', address, entry, heads);
-			setPeers(() => DB.all);
-
+		DB.events.on('write', () => {
+			setPeers({...DB.all});
 		});
 	}, [DB]);
 
@@ -320,7 +323,7 @@ export default function Upload() {
 							<MainButton onClick={handleFileEncryptAndUpload} className={'hover:scale-110 transition-all'} text={'Upload'} />
 						</div>
 						:
-						<div className='flex flex-col justify-center gap-5 w-0 overflow-hidden transition-all'>
+						<div className='flex flex-col justify-center gap-5 h-0 overflow-hidden transition-all'>
 							<input
 								type="file"
 								className="border-blue-500 border-2 p-2 px-5 rounded-xl text-xl"

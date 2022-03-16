@@ -4,8 +4,10 @@ import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
 import React from 'react';
 import { AppContextProvider } from '../context';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 export const UserContext = React.createContext();
+const queryClient = new QueryClient();
 
 
 function MyApp({ Component, pageProps }) {
@@ -14,11 +16,13 @@ function MyApp({ Component, pageProps }) {
 		return library;
 	}
 	return <React.StrictMode>
-		<Web3ReactProvider getLibrary={getLibrary} libraryName={'web3.js'}>
-			<AppContextProvider>
-				<Component {...pageProps} />
-			</AppContextProvider>
-		</Web3ReactProvider>
+		<QueryClientProvider client={queryClient} >
+			<Web3ReactProvider getLibrary={getLibrary} libraryName={'web3.js'}>
+				<AppContextProvider>
+					<Component {...pageProps} />
+				</AppContextProvider>
+			</Web3ReactProvider>
+		</QueryClientProvider>
 	</React.StrictMode>;
 }
 
