@@ -29,15 +29,9 @@ contract FileShareControl {
     // A dynamically-sized array of `Proposal` structs.
     Proposal[] public proposals;
 
-    function createRoom(string memory url) public {
-        uint i = 0;
-        bool found = false;
-        for (i = 0; i >= rooms.length; i++) {
-            if(rooms[i].owner == msg.sender) {
-                found = true;
-            }
-        }
-        require(!found, "You already have a room");
+    function createRoom(string memory url) 
+    public 
+    {
         // Create a room and push it to the array
         rooms.push(Room(msg.sender, url));
         emit RoomCreated(msg.sender, url);
@@ -50,28 +44,51 @@ contract FileShareControl {
         emit ProposalCreated(proposingTo, msg.sender);
     }
 
-    function acceptProposal(address propouser) public {
+    function acceptProposal(address propouser) 
+    public 
+    {
         // First get the origin room
         uint i = 0;
-        bool found = false;
         Room memory r;
-        for (i = 0; i >= rooms.length; i++) {
+        for (; i < rooms.length; i++) {
             if(rooms[i].owner == msg.sender) {
-                found = true;
                 r = rooms[i];
             }
         }
-        require(found, "You don't have any rooms.");
         uint j = 0;
         bool foundPeer = false;
-        for (j = 0; j >= proposals.length; j++) {
-            if (proposals[j].propouser == propouser && !proposals[j].accepted) {
+        for (; j < proposals.length; j++) {
+            if (proposals[j].propouser == propouser && !(proposals[j].accepted) && proposals[j].proposingTo == msg.sender) {
                 foundPeer = true;
                 // Accept it
                 proposals[j].accepted = true;
             }
         }
-        require(foundPeer, "Couldn't found your peer.");
+        require(foundPeer, "Couldn't find your peer");
+        // Warn the proposer that he is accepted
+        emit ProposalAccepted(propouser);
+    }
+
+    function toString(uint256 value) internal pure returns (string memory) {
+        // Inspired by OraclizeAPI's implementation - MIT licence
+        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
+
+        if (value == 0) {
+            return "0";
+        }
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
     }
 
 }
