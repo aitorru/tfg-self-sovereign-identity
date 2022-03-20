@@ -34,3 +34,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Smart contracts
+/contracts/artifacts
+/contracts/swarm
