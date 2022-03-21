@@ -13,7 +13,7 @@ contract FileShareControl {
         address owner;
         string orbit_db_url;
     }
-
+    mapping (address => Room) rooms;
     // TODO: Use mapping for better use
     struct Proposal {
         address proposer;
@@ -21,28 +21,31 @@ contract FileShareControl {
         string orbit_db_identity;
         bool accepted;
     }
+    mapping (address => Proposal) proposals;
 
     // Declare events. Will be used in js https://stackoverflow.com/questions/69541323/continuously-listening-to-smart-contract-events
     event RoomCreated(address owner, string url);
     event ProposalCreated(address owner, address proposer);
     event ProposalAccepted(address proposer);
-    // A dynamically-sized array of `Room` structs.
-    Room[] public rooms;
-    // A dynamically-sized array of `Proposal` structs.
-    Proposal[] public proposals;
 
     function createRoom(string memory url) 
     public 
     {
-        // Create a room and push it to the array
-        rooms.push(Room(msg.sender, url));
+        // We cannot use "rooms[address] = Room(0x00000...0, "...")"
+        // because the right hand side creates a memory-struct "Room" that contains a mapping
+        Room storage r      = rooms[msg.sender];
+        r.owner             = msg.sender;
+        r.orbit_db_url      = url;
         emit RoomCreated(msg.sender, url);
     }
 
     function createProposal(address proposalTo, string memory identity)
         public
     {
-        proposals.push(Proposal(msg.sender, proposalTo, identity, false));
+        Proposal storage p  = proposals[msg.sender];
+        p.proposer          = msg.sender;
+        p.proposalTo        = proposalTo;
+        p.orbit_db_identity = identity;
         emit ProposalCreated(proposalTo, msg.sender);
     }
 
@@ -50,23 +53,17 @@ contract FileShareControl {
     public 
     {
         // First get the origin room
-        uint i = 0;
-        Room memory r;
-        for (; i < rooms.length; i++) {
-            if(rooms[i].owner == msg.sender) {
-                r = rooms[i];
-            }
-        }
-        uint j = 0;
-        bool foundPeer = false;
-        for (; j < proposals.length; j++) {
-            if (proposals[j].proposer == proposer && !(proposals[j].accepted) && proposals[j].proposalTo == msg.sender) {
-                foundPeer = true;
-                // Accept it
-                proposals[j].accepted = true;
-            }
-        }
-        require(foundPeer, "Couldn't find your peer");
+        Room memory r = rooms[msg.sender];
+        // Check if the room exists. If not, the struct is generated with default values.
+        // Default value of address
+        require(r.owner != 0x0000000000000000000000000000000000000000, "You don't have any room.");
+        
+        Proposal memory p = proposals[proposer];
+        // Proposal checks
+        require(p.proposer !=  0x0000000000000000000000000000000000000000 && p.proposalTo != 0x0000000000000000000000000000000000000000, "The proposal doesn't exists.");
+        require(p.proposalTo == msg.sender, "You are not the origin");
+        require(p.proposer == proposer, "(+_+)");
+        require(!(p.accepted), "The proposal is already accepted");
         // Warn the proposer that he is accepted
         emit ProposalAccepted(proposer);
     }
