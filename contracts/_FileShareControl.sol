@@ -4,26 +4,28 @@ pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @title FileShareControl
- * @dev Publicy and allow users into your db
+ * @dev Publish and allow users into your db
  */
 contract FileShareControl {
     // TODO: Allow user to regenerate the url
+    // TODO: Use mapping for better use https://ethereum.stackexchange.com/questions/2385/can-i-save-structs-in-a-mapping
     struct Room {
         address owner;
-        string Orbit_db_url;
+        string orbit_db_url;
     }
 
+    // TODO: Use mapping for better use
     struct Proposal {
-        address propouser;
-        address proposingTo;
+        address proposer;
+        address proposalTo;
         string orbit_db_identity;
         bool accepted;
     }
 
     // Declare events. Will be used in js https://stackoverflow.com/questions/69541323/continuously-listening-to-smart-contract-events
     event RoomCreated(address owner, string url);
-    event ProposalCreated(address owner, address propouser);
-    event ProposalAccepted(address propouser);
+    event ProposalCreated(address owner, address proposer);
+    event ProposalAccepted(address proposer);
     // A dynamically-sized array of `Room` structs.
     Room[] public rooms;
     // A dynamically-sized array of `Proposal` structs.
@@ -37,14 +39,14 @@ contract FileShareControl {
         emit RoomCreated(msg.sender, url);
     }
 
-    function createProposal(address proposingTo, string memory identity)
+    function createProposal(address proposalTo, string memory identity)
         public
     {
-        proposals.push(Proposal(msg.sender, proposingTo, identity, false));
-        emit ProposalCreated(proposingTo, msg.sender);
+        proposals.push(Proposal(msg.sender, proposalTo, identity, false));
+        emit ProposalCreated(proposalTo, msg.sender);
     }
 
-    function acceptProposal(address propouser) 
+    function acceptProposal(address proposer) 
     public 
     {
         // First get the origin room
@@ -58,7 +60,7 @@ contract FileShareControl {
         uint j = 0;
         bool foundPeer = false;
         for (; j < proposals.length; j++) {
-            if (proposals[j].propouser == propouser && !(proposals[j].accepted) && proposals[j].proposingTo == msg.sender) {
+            if (proposals[j].proposer == proposer && !(proposals[j].accepted) && proposals[j].proposalTo == msg.sender) {
                 foundPeer = true;
                 // Accept it
                 proposals[j].accepted = true;
@@ -66,29 +68,7 @@ contract FileShareControl {
         }
         require(foundPeer, "Couldn't find your peer");
         // Warn the proposer that he is accepted
-        emit ProposalAccepted(propouser);
-    }
-
-    function toString(uint256 value) internal pure returns (string memory) {
-        // Inspired by OraclizeAPI's implementation - MIT licence
-        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
-
-        if (value == 0) {
-            return "0";
-        }
-        uint256 temp = value;
-        uint256 digits;
-        while (temp != 0) {
-            digits++;
-            temp /= 10;
-        }
-        bytes memory buffer = new bytes(digits);
-        while (value != 0) {
-            digits -= 1;
-            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
-            value /= 10;
-        }
-        return string(buffer);
+        emit ProposalAccepted(proposer);
     }
 
 }
