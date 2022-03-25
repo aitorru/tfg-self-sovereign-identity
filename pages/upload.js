@@ -6,25 +6,63 @@ import Head from 'next/head';
 import MainButton from '../components/button';
 import useAppContext from '../context';
 import { encrypt, readfile } from '../utils';
+import jsonInterface from '../contracts/artifacts/FileShareControl.json';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
+const Contract = require('web3-eth-contract');
+const ADDRESS = '0x860e75587B7Ac9d713E232B90913E6fC11638E98';
+var contract = undefined;
+
 
 export default function Upload() {
-	const [inputValue, setInputValue] = useState('');
-	const [address, setAddress] = useState('');
-	const [connectionActive, setConnectionActive] = useState(false);
+	const [ address, setAddress ] = useState('');
+	const [ connectionActive, setConnectionActive ] = useState(false);
 	// 😵‍💫🤞 https://stackoverflow.com/questions/66670473/usestate-not-re-rendering-component-if-it-is-called-inside-callback-function
 	// const [,forceUpdate] = useState();
 	// const peers = useCallbackRef({}, () => forceUpdate());
-	const [peers, setPeers] = useState({});
-	const [selectedAddress, setSelectedAddress] = useState('');
+	const [ rooms, setRooms ] = useState({});
+	const [ peers, setPeers ] = useState({});
+	const [ selectedAddress, setSelectedAddress ] = useState('');
 	const imageUpload = useRef();
 	const { ipfs, setIpfs, DID, DB, setDB } = useAppContext();
-	const handleInputChange = (event) => {
-		setInputValue(event.target.value);
-	};
 	const context = useWeb3React();
-	const { account } = context;
+	const { account, library, active } = context;
+
+	useEffect(() => {
+		if(!active) return;
+		// Initialize the contract
+		Contract.setProvider(library);
+		// Create contract
+		contract = new Contract(jsonInterface['abi'], ADDRESS);
+
+		contract.events.RoomCreated(function(error, result) {
+			if (error) {
+				console.error(error);
+				return;
+			}
+			if(result === null) {
+				console.error('Result is null');
+				return;
+			}
+			const returnValues = result.returnValues;
+			const found = Object.keys(rooms).find((r) => returnValues.owner === r);
+			if (found !== undefined) {
+				rooms[returnValues.owner].url = returnValues.url;
+			} else {
+				rooms[returnValues.owner] = {
+					owner: returnValues.owner,
+					url: returnValues.url
+				};
+			}
+			setRooms({...rooms});
+		});
+		contract.events.ProposalCreated(function(error, result) {
+			if (!error)console.log(result);
+		});
+		contract.events.ProposalAccepted(function(error, result) {
+			if (!error)console.log(result);
+		});
+	}, []);
 
 	// Connect to IPFS
 	useEffect(async () => {
@@ -99,6 +137,7 @@ export default function Upload() {
 				],
 			},
 		};
+
 		// Create key value db
 		const db = await orbitdb.keyvalue(account, options);
 		setDB(db);
@@ -108,6 +147,8 @@ export default function Upload() {
 		setConnectionActive(true);
 		// Update UI
 		setAddress(db.address.toString());
+		// Call smart contract
+		contract.methods.createRoom(db.address.toString()).send({ from: account, gasPrice: '20000000000' });
 		// Obtain DID from global context and upload it
 		const DID_safe = DID;
 		Object.keys(DID_safe).forEach((key) =>
@@ -116,30 +157,30 @@ export default function Upload() {
 		await db.put(account, DID_safe);
 		console.log('Uploaded');
 	};
-	const handleConnectToDatabase = async () => {
-		if (!OrbitDB.isValidAddress(inputValue)) return;
-		try {
-			// Create instance
-			const orbitdb = await OrbitDB.createInstance(ipfs);
-			// Connect to remote db
-			const db = await orbitdb.open(inputValue);
-			setDB(db);
-			// Replicate db in local storage
-			await db.load();
-			// Change UI after connection
-			setConnectionActive(true);
-			// Update UI
-			setAddress(db.address.toString());
-			// Retrive a safe DID and upload it
-			const DID_safe = DID;
-			Object.keys(DID_safe).forEach((key) =>
-				DID_safe[key] === undefined ? delete DID_safe[key] : {}
-			);
-			await db.put(account, DID_safe);
-		} catch (error) {
-			console.error(error);
-		}
-	};
+	// const handleConnectToDatabase = async () => {
+	// 	if (!OrbitDB.isValidAddress(inputValue)) return;
+	// 	try {
+	// 		// Create instance
+	// 		const orbitdb = await OrbitDB.createInstance(ipfs);
+	// 		// Connect to remote db
+	// 		const db = await orbitdb.open(inputValue);
+	// 		setDB(db);
+	// 		// Replicate db in local storage
+	// 		await db.load();
+	// 		// Change UI after connection
+	// 		setConnectionActive(true);
+	// 		// Update UI
+	// 		setAddress(db.address.toString());
+	// 		// Retrive a safe DID and upload it
+	// 		const DID_safe = DID;
+	// 		Object.keys(DID_safe).forEach((key) =>
+	// 			DID_safe[key] === undefined ? delete DID_safe[key] : {}
+	// 		);
+	// 		await db.put(account, DID_safe);
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
+	// };
 
 	const handleFileEncryptAndUpload = async () => {
 		const objFile = imageUpload.current.files[0];
@@ -313,30 +354,23 @@ export default function Upload() {
             Connect to a database or create one to start sharing
 					</h1>
 				)}
-				<div className="flex flex-row gap-5 w-full justify-around">
-					{connectionActive ? null : (
-						<>
-							<input
-								className="placeholder-blue-500 placeholder-opacity-50 rounded-3xl py-1 px-2 border border-indigo-500 focus:border-indigo-900 w-3/4"
-								type="text"
-								placeholder="Orbit DB address..."
-								value={inputValue}
-								onChange={handleInputChange}
-							/>
-							<MainButton
-								onClick={handleConnectToDatabase}
-								text={'Connect to DB'}
-							/>
+				{!connectionActive && (
+					<>
+						<h1>Connect to a existing room</h1>
+						<div className="flex flex-row gap-5 w-full justify-around">
+						
+							
 							<MainButton onClick={handleCreateDB} text={'Create DB'} />
-						</>
-					)}
-				</div>
-				{address === '' ? null : (
-					<h1>
-            Share this with your destination:{' '}
-						<span className="font-bold">{address}</span>
-					</h1>
+						</div>
+					</>
 				)}
+				{
+					Object.keys(rooms).map((r) => {
+						return (
+							<p key={r.owner}>{rooms[r].owner}</p>
+						);
+					})
+				}
 				{connectionActive && (
 					<h1 className="text-center text-4xl mt-3">Select a peer</h1>
 				)}
