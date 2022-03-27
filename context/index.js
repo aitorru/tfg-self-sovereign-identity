@@ -8,6 +8,7 @@ export const AppContextProvider = ({ children }) => {
 	const [DID, setDID] = React.useState(false);
 	const [ipfs, setIpfs] = React.useState(false);
 	const [DB, setDB] = React.useState(false);
+	const [OrbitDBidentity, setOrbitDBidentity] = React.useState(false);
 
 	//ComponentDidMouunt
 	React.useEffect(() => {
@@ -22,10 +23,12 @@ export const AppContextProvider = ({ children }) => {
 			ipfs,
 			setIpfs,
 			DB,
-			setDB
+			setDB,
+			OrbitDBidentity,
+			setOrbitDBidentity
 		}),
 	[
-		DID, ipfs, DB]);   // States que serán visibles en el contexto.
+		DID, ipfs, DB, OrbitDBidentity]);   // States que serán visibles en el contexto.
 
 	// Interface donde será expuesto como proveedor y envolverá la App.
 	return <AppContext.Provider value={values}>{children}</AppContext.Provider>;

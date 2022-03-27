@@ -23,8 +23,9 @@ export default function Upload() {
 	const [ rooms, setRooms ] = useState({});
 	const [ peers, setPeers ] = useState({});
 	const [ selectedAddress, setSelectedAddress ] = useState('');
+	const [ requestedAddress, setRequestedAddress ] = useState('');
 	const imageUpload = useRef();
-	const { ipfs, setIpfs, DID, DB, setDB } = useAppContext();
+	const { ipfs, setIpfs, DID, DB, setDB, OrbitDBidentity, setOrbitDBidentity } = useAppContext();
 	const context = useWeb3React();
 	const { account, library, active } = context;
 
@@ -125,11 +126,15 @@ export default function Upload() {
 	const handleCreateDB = async () => {
 		// TODO: Announce room creation using the smart contract
 		if (!ipfs) return;
-
+		// Create identity https://github.com/orbitdb/orbit-db/blob/main/GUIDE.md#creating-an-identity
+		const Identities = require('orbit-db-identity-provider');
+		let options = { id: 'local-id' };
+		const identity = await Identities.createIdentity(options);
+		console.log(identity);
 		// Create instance
 		// Mantain connection to pesist data
-		const orbitdb = await OrbitDB.createInstance(ipfs);
-		const options = {
+		const orbitdb = await OrbitDB.createInstance(ipfs, { identity });
+		options = {
 			// Give write access to yourself at first
 			accessController: {
 				write: [
@@ -157,30 +162,50 @@ export default function Upload() {
 		await db.put(account, DID_safe);
 		console.log('Uploaded');
 	};
-	// const handleConnectToDatabase = async () => {
-	// 	if (!OrbitDB.isValidAddress(inputValue)) return;
-	// 	try {
-	// 		// Create instance
-	// 		const orbitdb = await OrbitDB.createInstance(ipfs);
-	// 		// Connect to remote db
-	// 		const db = await orbitdb.open(inputValue);
-	// 		setDB(db);
-	// 		// Replicate db in local storage
-	// 		await db.load();
-	// 		// Change UI after connection
-	// 		setConnectionActive(true);
-	// 		// Update UI
-	// 		setAddress(db.address.toString());
-	// 		// Retrive a safe DID and upload it
-	// 		const DID_safe = DID;
-	// 		Object.keys(DID_safe).forEach((key) =>
-	// 			DID_safe[key] === undefined ? delete DID_safe[key] : {}
-	// 		);
-	// 		await db.put(account, DID_safe);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
+	const handleRequestToDatabase = async (owner, url) => {
+		if (!OrbitDB.isValidAddress(url)) return;
+		try {
+			// Create identity
+			const Identities = require('orbit-db-identity-provider');
+			let options = { id: 'local-id' };
+			const identity = await Identities.createIdentity(options);
+			setOrbitDBidentity(identity);
+			//Update state
+			setRequestedAddress(url);
+			// Call smart contract. The identity must be a string and parsed later.
+			contract.methods.createProposal(owner, JSON.stringify(identity)).send({ from: account, gasPrice: '20000000000' });
+			
+		} catch (error) {
+			console.error(error);
+		}
+	};
+	// eslint-disable-next-line no-unused-vars
+	const handleAcceptRequestToDatabase = async (identity, proposer) => {
+		// Grant access to existing db.
+		await DB.access.grant('write', identity.publicKey);
+		// Contact smart contract
+		contract.methods.acceptProposal(proposer).send({ from: account, gasPrice: '20000000000' });
+	};
+	// eslint-disable-next-line no-unused-vars
+	const handleConnectToPeerDatabase = async () => {
+		// Create instance
+		const orbitdb = await OrbitDB.createInstance(ipfs, { identity: OrbitDBidentity });
+		// Connect to remote db
+		const db = await orbitdb.open(requestedAddress);
+		setDB(db);
+		// Replicate db in local storage
+		await db.load();
+		// Change UI after connection
+		setConnectionActive(true);
+		// Update UI
+		setAddress(db.address.toString());
+		// Retrive a safe DID and upload it
+		const DID_safe = DID;
+		Object.keys(DID_safe).forEach((key) =>
+			DID_safe[key] === undefined ? delete DID_safe[key] : {}
+		);
+		await db.put(account, DID_safe);
+	};
 
 	const handleFileEncryptAndUpload = async () => {
 		const objFile = imageUpload.current.files[0];
@@ -350,27 +375,31 @@ export default function Upload() {
 			<Header />
 			<div className="flex flex-col justify-center items-center gap-5 container mx-auto">
 				{!connectionActive && (
-					<h1 className="text-center text-4xl mt-3">
-            Connect to a database or create one to start sharing
-					</h1>
-				)}
-				{!connectionActive && (
 					<>
-						<h1>Connect to a existing room</h1>
+						<h1 className='text-4xl'>Existing rooms</h1>
+						<div className='flex flex-row justify-center flex-wrap'>
+							{
+								Object.keys(rooms).map((r) => {
+									if(r.owner === account) return null;
+									return (
+										<p 
+											className='rounded-lg px-4 py-2 transition-all bg-blue-200 cursor-pointer hover:bg-blue-300'
+											key={r.owner}
+											onClick={handleRequestToDatabase(r.owner, r.url)}
+										>
+											{rooms[r].owner}
+										</p>
+									);
+								})
+							}
+						</div>
+						<h1 className='text-3xl'>Connect to one or just create a room</h1>
 						<div className="flex flex-row gap-5 w-full justify-around">
-						
-							
-							<MainButton onClick={handleCreateDB} text={'Create DB'} />
+							<MainButton onClick={handleCreateDB} text={'Create room'} />
 						</div>
 					</>
 				)}
-				{
-					Object.keys(rooms).map((r) => {
-						return (
-							<p key={r.owner}>{rooms[r].owner}</p>
-						);
-					})
-				}
+				{address && <h1>Connected to {address}</h1>}
 				{connectionActive && (
 					<h1 className="text-center text-4xl mt-3">Select a peer</h1>
 				)}
