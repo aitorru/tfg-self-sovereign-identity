@@ -10,32 +10,33 @@ import jsonInterface from '../contracts/artifacts/FileShareControl.json';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 const Contract = require('web3-eth-contract');
-const ADDRESS = '0x860e75587B7Ac9d713E232B90913E6fC11638E98';
+const ADDRESS = '0x56478CC7bBD364DD613c6494d1aA098ffc8c4Ab0';
 var contract = undefined;
 
 
 export default function Upload() {
 	const [ address, setAddress ] = useState('');
 	const [ connectionActive, setConnectionActive ] = useState(false);
-	// 😵‍💫🤞 https://stackoverflow.com/questions/66670473/usestate-not-re-rendering-component-if-it-is-called-inside-callback-function
-	// const [,forceUpdate] = useState();
-	// const peers = useCallbackRef({}, () => forceUpdate());
 	const [ rooms, setRooms ] = useState({});
 	const [ peers, setPeers ] = useState({});
 	const [ selectedAddress, setSelectedAddress ] = useState('');
 	const [ requestedAddress, setRequestedAddress ] = useState('');
+	const [ notifications, setNotifications ] = useState([]);
 	const imageUpload = useRef();
 	const { ipfs, setIpfs, DID, DB, setDB, OrbitDBidentity, setOrbitDBidentity } = useAppContext();
 	const context = useWeb3React();
 	const { account, library, active } = context;
 
 	useEffect(() => {
+		console.log(contract);
 		if(!active) return;
+		// If contract is undefined initialize it 
+		if(contract !== undefined) return;
+		console.log(contract);
 		// Initialize the contract
 		Contract.setProvider(library);
 		// Create contract
 		contract = new Contract(jsonInterface['abi'], ADDRESS);
-
 		contract.events.RoomCreated(function(error, result) {
 			if (error) {
 				console.error(error);
@@ -55,10 +56,24 @@ export default function Upload() {
 					url: returnValues.url
 				};
 			}
+			console.log(rooms);
 			setRooms({...rooms});
 		});
 		contract.events.ProposalCreated(function(error, result) {
-			if (!error)console.log(result);
+			if (error) {
+				console.error(error);
+				return;
+			}
+			if(result === null) {
+				console.error('Result is null');
+				return;
+			}
+			console.log(result);
+			if(result.returnValues.owner !== account) return;
+			setNotifications([ ...notifications,{
+				owner: result.returnValues.owner,
+				proposer: result.returnValues.proposer,
+			}]);
 		});
 		contract.events.ProposalAccepted(function(error, result) {
 			if (!error)console.log(result);
@@ -92,8 +107,8 @@ export default function Upload() {
 				},
 			};
 			const ipfs_local = await IPFS.create(ipfsOptions);
-
 			setIpfs(ipfs_local);
+			
 		}
 	}, []);
 
@@ -128,7 +143,7 @@ export default function Upload() {
 		if (!ipfs) return;
 		// Create identity https://github.com/orbitdb/orbit-db/blob/main/GUIDE.md#creating-an-identity
 		const Identities = require('orbit-db-identity-provider');
-		let options = { id: 'local-id' };
+		let options = { id: account };
 		const identity = await Identities.createIdentity(options);
 		console.log(identity);
 		// Create instance
@@ -167,7 +182,7 @@ export default function Upload() {
 		try {
 			// Create identity
 			const Identities = require('orbit-db-identity-provider');
-			let options = { id: 'local-id' };
+			let options = { id: account };
 			const identity = await Identities.createIdentity(options);
 			setOrbitDBidentity(identity);
 			//Update state
@@ -384,8 +399,8 @@ export default function Upload() {
 									return (
 										<p 
 											className='rounded-lg px-4 py-2 transition-all bg-blue-200 cursor-pointer hover:bg-blue-300'
-											key={r.owner}
-											onClick={handleRequestToDatabase(r.owner, r.url)}
+											key={rooms[r].owner}
+											onClick={() => handleRequestToDatabase(rooms[r].owner, rooms[r].url)}
 										>
 											{rooms[r].owner}
 										</p>
@@ -473,6 +488,20 @@ export default function Upload() {
 						})
 					}
 				</div>
+				<p>{JSON.stringify(notifications)}</p>
+			</div>
+			<div className='flex flex-col-reverse'>
+				{
+					// eslint-disable-next-line no-unused-vars
+					notifications.map(i => {
+						return (
+							<div key={i.proposer} className='absolute bg-slate-300 right-2 p-5 rounded-xl'>
+								<h1>Would you like to accept {i.proposer} to the room?</h1>
+							</div>
+						);
+					}
+					)
+				}
 			</div>
 		</>
 	);
