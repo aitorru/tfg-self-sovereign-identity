@@ -10,7 +10,7 @@ import jsonInterface from '../contracts/artifacts/FileShareControl.json';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 const Contract = require('web3-eth-contract');
-const ADDRESS = '0x56478CC7bBD364DD613c6494d1aA098ffc8c4Ab0';
+const ADDRESS = process.env.SMARTCONTRACTADDRESS;
 var contract = undefined;
 
 
@@ -28,11 +28,9 @@ export default function Upload() {
 	const { account, library, active } = context;
 
 	useEffect(() => {
-		console.log(contract);
 		if(!active) return;
 		// If contract is undefined initialize it 
 		if(contract !== undefined) return;
-		console.log(contract);
 		// Initialize the contract
 		Contract.setProvider(library);
 		// Create contract
@@ -488,15 +486,20 @@ export default function Upload() {
 						})
 					}
 				</div>
-				<p>{JSON.stringify(notifications)}</p>
 			</div>
-			<div className='flex flex-col-reverse'>
+			<div className='flex flex-col-reverse absolute bottom-2 gap-5 right-2 items-end'>
 				{
 					// eslint-disable-next-line no-unused-vars
 					notifications.map(i => {
 						return (
-							<div key={i.proposer} className='absolute bg-slate-300 right-2 p-5 rounded-xl'>
-								<h1>Would you like to accept {i.proposer} to the room?</h1>
+							<div key={i.proposer} className='relative bg-slate-300 p-5 rounded-xl w-fit transition-all cursor-default flex flex-col'>
+								<h1 className=''>Would you like to accept<br></br>
+									<span className='text-xs hover:text-base overflow-hidden truncate transition-all'>{i.proposer}</span>
+									<br></br> to the room?</h1>
+								<div className='flex flex-row'>
+									<button className='flex-grow bg-slate-400'>ye</button>
+									<button className='flex-grow bg-slate-400'>na</button>
+								</div>
 							</div>
 						);
 					}
