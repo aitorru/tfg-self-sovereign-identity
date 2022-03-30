@@ -21,7 +21,7 @@ export default function Login() {
 			rpc: { 1: `https://relay.walletconnect.com/?apiKey=${process.env.WALLETCONNECT}` },
 			qrcode: true
 		}
-	);
+	);	
 	const context = useWeb3React();
 	const { chainId, account, activate, active } = context;
 
