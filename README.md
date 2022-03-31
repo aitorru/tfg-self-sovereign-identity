@@ -16,8 +16,21 @@ yarn install
 
 ## Usage
 
+Add your ```WALLETCONNECT``` key to the .env file. Check the ganache folder to see how to load the ```SMARTCONTRACTADDRESS```.
+
+### Next JS dev server
 ```sh
 yarn dev
+```
+
+### ganache-cli server
+```sh
+yarn ganache
+```
+
+### Remix IDE local connection
+```sh
+yarn remix
 ```
 
 ## Author
