@@ -10,7 +10,7 @@ import jsonInterface from '../contracts/artifacts/FileShareControl.json';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 const Contract = require('web3-eth-contract');
-const ADDRESS = process.env.SMARTCONTRACTADDRESS;
+const ADDRESS = process.env.SMARTCONTRACTADDRESS || '0x00BAe29852b041B8612A35C8Cf6959CD480C7058';
 var contract = undefined;
 
 
@@ -71,6 +71,7 @@ export default function Upload() {
 			setNotifications([ ...notifications,{
 				owner: result.returnValues.owner,
 				proposer: result.returnValues.proposer,
+				identity: result.returnValues.identity,
 			}]);
 		});
 		contract.events.ProposalAccepted(function(error, result) {
@@ -386,17 +387,17 @@ export default function Upload() {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<Header />
-			<div className="flex flex-col justify-center items-center gap-5 container mx-auto">
+			<div className="container flex flex-col items-center justify-center mx-auto gap-5">
 				{!connectionActive && (
 					<>
 						<h1 className='text-4xl'>Existing rooms</h1>
-						<div className='flex flex-row justify-center flex-wrap'>
+						<div className='flex flex-row flex-wrap justify-center'>
 							{
 								Object.keys(rooms).map((r) => {
 									if(r.owner === account) return null;
 									return (
 										<p 
-											className='rounded-lg px-4 py-2 transition-all bg-blue-200 cursor-pointer hover:bg-blue-300'
+											className='px-4 py-2 bg-blue-200 rounded-lg cursor-pointer transition-all hover:bg-blue-300'
 											key={rooms[r].owner}
 											onClick={() => handleRequestToDatabase(rooms[r].owner, rooms[r].url)}
 										>
@@ -407,16 +408,16 @@ export default function Upload() {
 							}
 						</div>
 						<h1 className='text-3xl'>Connect to one or just create a room</h1>
-						<div className="flex flex-row gap-5 w-full justify-around">
+						<div className="flex flex-row justify-around w-full gap-5">
 							<MainButton onClick={handleCreateDB} text={'Create room'} />
 						</div>
 					</>
 				)}
 				{address && <h1>Connected to {address}</h1>}
 				{connectionActive && (
-					<h1 className="text-center text-4xl mt-3">Select a peer</h1>
+					<h1 className="mt-3 text-4xl text-center">Select a peer</h1>
 				)}
-				<div className="flex flex-row gap-5 overflow-x-auto">
+				<div className="flex flex-row overflow-x-auto gap-5">
 					{
 						// Its a JSON, not an array so we do this
 						Object.keys(peers).map((k) => {
@@ -442,7 +443,7 @@ export default function Upload() {
 					<div className="flex flex-col justify-center gap-5">
 						<input
 							type="file"
-							className="border-blue-500 border-2 p-2 px-5 rounded-xl text-xl"
+							className="p-2 px-5 text-xl border-2 border-blue-500 rounded-xl"
 							ref={imageUpload}
 						/>
 						<MainButton
@@ -452,18 +453,18 @@ export default function Upload() {
 						/>
 					</div>
 				) : (
-					<div className="flex flex-col justify-center gap-5 h-0 overflow-hidden transition-all">
+					<div className="flex flex-col justify-center h-0 overflow-hidden gap-5 transition-all">
 						<input
 							type="file"
-							className="border-blue-500 border-2 p-2 px-5 rounded-xl text-xl"
+							className="p-2 px-5 text-xl border-2 border-blue-500 rounded-xl"
 							ref={imageUpload}
 						/>
 					</div>
 				)}
 				{connectionActive && (
-					<h1 className="text-center text-4xl mt-3">Download zone</h1>
+					<h1 className="mt-3 text-4xl text-center">Download zone</h1>
 				)}
-				<div className="flex flex-row gap-5 overflow-x-auto">
+				<div className="flex flex-row overflow-x-auto gap-5">
 					{
 						// Its a JSON, not an array so we do this
 						Object.keys(peers).map((k) => {
@@ -478,7 +479,7 @@ export default function Upload() {
 											peers[k].fileName
 										);
 									}}
-									className="rounded-lg px-4 py-2 transition-all bg-blue-200 cursor-pointer hover:bg-blue-300"
+									className="px-4 py-2 bg-blue-200 rounded-lg cursor-pointer transition-all hover:bg-blue-300"
 									key={peers[k].ipfsFile.path}>
 									{peers[k].fileName}
 								</h1>
@@ -487,18 +488,18 @@ export default function Upload() {
 					}
 				</div>
 			</div>
-			<div className='flex flex-col-reverse absolute bottom-2 gap-5 right-2 items-end'>
+			<div className='absolute flex flex-col-reverse items-end bottom-2 gap-5 right-2'>
 				{
 					// eslint-disable-next-line no-unused-vars
 					notifications.map(i => {
 						return (
-							<div key={i.proposer} className='relative bg-slate-300 p-5 rounded-xl w-fit transition-all cursor-default flex flex-col'>
+							<div key={i.proposer} className='relative flex flex-col p-5 cursor-default bg-slate-300 rounded-xl w-fit transition-all'>
 								<h1 className=''>Would you like to accept<br></br>
-									<span className='text-xs hover:text-base overflow-hidden truncate transition-all'>{i.proposer}</span>
+									<span className='overflow-hidden text-xs truncate hover:text-base transition-all'>{i.proposer}</span>
 									<br></br> to the room?</h1>
-								<div className='flex flex-row'>
-									<button className='flex-grow bg-slate-400'>ye</button>
-									<button className='flex-grow bg-slate-400'>na</button>
+								<div className='flex flex-row gap-5'>
+									<button className='flex-grow p-2 bg-blue-400 rounded-lg' onClick={handleAcceptRequestToDatabase(i.identity, i.proposer)}>ye</button>
+									<button className='flex-grow p-2 bg-blue-400 rounded-lg'>na</button>
 								</div>
 							</div>
 						);

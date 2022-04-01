@@ -25,7 +25,7 @@ contract FileShareControl {
 
     // Declare events. Will be used in js https://stackoverflow.com/questions/69541323/continuously-listening-to-smart-contract-events
     event RoomCreated(address owner, string url);
-    event ProposalCreated(address owner, address proposer);
+    event ProposalCreated(address owner, address proposer, string identity);
     event ProposalAccepted(address proposer);
 
     function createRoom(string memory url) 
@@ -46,7 +46,7 @@ contract FileShareControl {
         p.proposer          = msg.sender;
         p.proposalTo        = proposalTo;
         p.orbit_db_identity = identity;
-        emit ProposalCreated(proposalTo, msg.sender);
+        emit ProposalCreated(proposalTo, msg.sender, identity);
     }
 
     function acceptProposal(address proposer) 
