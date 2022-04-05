@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently --kill-others \" yarn nextdev\" \" yarn remix \" \" yarn ganache\" ",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix",
     "remix": "remixd -s contracts",
-    "ganache": "ganache-cli -p 8545 --mnemonic \" word desert grief seven feature sight object message upon lesson boat praise \" --networkId 1337 --db ganache -q"
+    "ganache": "ganache-cli -p 8545 --mnemonic \" word desert grief seven feature sight object message upon lesson boat praise \" --networkId 1337 --db ganache -q",
+    "nextdev": "next dev"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.3",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
+    "concurrently": "^7.1.0",
     "eslint": "^8.9.0",
     "eslint-plugin-react": "^7.28.0",
     "postcss": "^8.4.6",

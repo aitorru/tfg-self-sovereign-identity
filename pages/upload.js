@@ -7,6 +7,7 @@ import MainButton from '../components/button';
 import useAppContext from '../context';
 import { encrypt, readfile } from '../utils';
 import jsonInterface from '../contracts/artifacts/FileShareControl.json';
+import { ipfsOptions } from '../utils/consts';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 const Contract = require('web3-eth-contract');
@@ -67,15 +68,31 @@ export default function Upload() {
 				return;
 			}
 			console.log(result);
+			// Do the job
+			// Check owner
 			if(result.returnValues.owner !== account) return;
-			setNotifications([ ...notifications,{
-				owner: result.returnValues.owner,
-				proposer: result.returnValues.proposer,
-				identity: result.returnValues.identity,
-			}]);
+			// Check the presence in the array.
+			const found = notifications.find(n => n.proposer === result.returnValues.proposer);
+			// The data associated to the proposer will never change, so we don't need to update anything.
+			if(found === undefined) {
+				setNotifications([ ...notifications,{
+					owner: result.returnValues.owner,
+					proposer: result.returnValues.proposer,
+					identity: result.returnValues.identity,
+				}]);
+			}
+			
 		});
 		contract.events.ProposalAccepted(function(error, result) {
-			if (!error)console.log(result);
+			if (error) console.log(error);
+			if (result === null) {
+				console.error('Result is null');
+				return;
+			}
+			console.log(result, result.returnValues.proposer === account, account);
+			// Do the job
+			if(result.returnValues.proposer === account) handleConnectToPeerDatabase();
+
 		});
 	}, []);
 
@@ -83,31 +100,8 @@ export default function Upload() {
 	useEffect(async () => {
 		// Connect to ipfs
 		if (!ipfs) {
-			const ipfsOptions = {
-				repo: '/ipfs/tfg',
-				gategay: '/ip4/127.0.0.1/tcp/5001',
-				start: true,
-				EXPERIMENTAL: {
-					pubsub: true,
-				},
-				config: {
-					Addresses: {
-						Swarm: [
-							'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/',
-							'/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
-							'/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
-							'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/p2p/QmZzX9T7h1uVy7HgePamnSE9tocAMMXxE9jq3iXkZ7izBB',
-							'/ip4/0.0.0.0/tcp/4001',
-							'/ip6/::/tcp/4001',
-							'/ip4/0.0.0.0/udp/4001/quic',
-							'/ip6/::/udp/4001/quic',
-						],
-					},
-				},
-			};
 			const ipfs_local = await IPFS.create(ipfsOptions);
 			setIpfs(ipfs_local);
-			
 		}
 	}, []);
 
@@ -138,7 +132,6 @@ export default function Upload() {
 	}, [DB]);
 
 	const handleCreateDB = async () => {
-		// TODO: Announce room creation using the smart contract
 		if (!ipfs) return;
 		// Create identity https://github.com/orbitdb/orbit-db/blob/main/GUIDE.md#creating-an-identity
 		const Identities = require('orbit-db-identity-provider');
@@ -199,9 +192,26 @@ export default function Upload() {
 		await DB.access.grant('write', identity.publicKey);
 		// Contact smart contract
 		contract.methods.acceptProposal(proposer).send({ from: account, gasPrice: '20000000000' });
+		// Remove the notification
+		console.log(proposer, notifications);
+		const newNotificationsFiltered = notifications.map(n => {
+			console.log(n);
+			if (n.proposer !== proposer) {
+				return n;
+			}
+		});
+		// FIXME: Being empty cause the array to be undefined, while the scpread operator causes it to render an undefined [0] index.
+		console.log(newNotificationsFiltered);
+		if (newNotificationsFiltered !== undefined) {
+			setNotifications([...newNotificationsFiltered]);
+		} else {
+			setNotifications([]);
+		}
 	};
 	// eslint-disable-next-line no-unused-vars
 	const handleConnectToPeerDatabase = async () => {
+		// FIXME: ipfs is false (?)
+		if(!ipfs) return;
 		// Create instance
 		const orbitdb = await OrbitDB.createInstance(ipfs, { identity: OrbitDBidentity });
 		// Connect to remote db
@@ -211,6 +221,8 @@ export default function Upload() {
 		await db.load();
 		// Change UI after connection
 		setConnectionActive(true);
+		// Update UI
+		setRequestedAddress('');
 		// Update UI
 		setAddress(db.address.toString());
 		// Retrive a safe DID and upload it
@@ -407,6 +419,10 @@ export default function Upload() {
 								})
 							}
 						</div>
+						{
+							requestedAddress &&
+							<p>Attemting to connect to {requestedAddress}</p>
+						}
 						<h1 className='text-3xl'>Connect to one or just create a room</h1>
 						<div className="flex flex-row justify-around w-full gap-5">
 							<MainButton onClick={handleCreateDB} text={'Create room'} />
@@ -498,7 +514,7 @@ export default function Upload() {
 									<span className='overflow-hidden text-xs truncate hover:text-base transition-all'>{i.proposer}</span>
 									<br></br> to the room?</h1>
 								<div className='flex flex-row gap-5'>
-									<button className='flex-grow p-2 bg-blue-400 rounded-lg' onClick={handleAcceptRequestToDatabase(i.identity, i.proposer)}>ye</button>
+									<button className='flex-grow p-2 bg-blue-400 rounded-lg' onClick={() => handleAcceptRequestToDatabase(i.identity, i.proposer)}>ye</button>
 									<button className='flex-grow p-2 bg-blue-400 rounded-lg'>na</button>
 								</div>
 							</div>
