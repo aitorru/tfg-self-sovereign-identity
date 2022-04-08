@@ -26,7 +26,7 @@ contract FileShareControl {
     // Declare events. Will be used in js https://stackoverflow.com/questions/69541323/continuously-listening-to-smart-contract-events
     event RoomCreated(address owner, string url);
     event ProposalCreated(address owner, address proposer, string identity);
-    event ProposalAccepted(address proposer);
+    event ProposalAccepted(address proposer, string url);
 
     function createRoom(string memory url) 
     public 
@@ -65,7 +65,7 @@ contract FileShareControl {
         require(p.proposer == proposer, "(+_+)");
         require(!(p.accepted), "The proposal is already accepted");
         // Warn the proposer that he is accepted
-        emit ProposalAccepted(proposer);
+        emit ProposalAccepted(proposer, r.orbit_db_url);
     }
 
 }

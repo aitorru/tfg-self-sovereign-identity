@@ -11,9 +11,8 @@ import { ipfsOptions } from '../utils/consts';
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
 const Contract = require('web3-eth-contract');
-const ADDRESS = process.env.SMARTCONTRACTADDRESS || '0x00BAe29852b041B8612A35C8Cf6959CD480C7058';
-var contract = undefined;
-
+const ADDRESS = process.env.SMARTCONTRACTADDRESS || '0x709f43F711A32498BFee2Be963dFc686aAD8B450';
+// var contract = undefined;
 
 export default function Upload() {
 	const [ address, setAddress ] = useState('');
@@ -24,19 +23,20 @@ export default function Upload() {
 	const [ requestedAddress, setRequestedAddress ] = useState('');
 	const [ notifications, setNotifications ] = useState([]);
 	const imageUpload = useRef();
-	const { ipfs, setIpfs, DID, DB, setDB, OrbitDBidentity, setOrbitDBidentity } = useAppContext();
+	const { ipfs, DID, DB, setDB, OrbitDBidentity, contract } = useAppContext();
 	const context = useWeb3React();
 	const { account, library, active } = context;
 
 	useEffect(() => {
 		if(!active) return;
 		// If contract is undefined initialize it 
-		if(contract !== undefined) return;
+		if(contract.current) return;
+		console.log('Loaded contract events');
 		// Initialize the contract
 		Contract.setProvider(library);
 		// Create contract
-		contract = new Contract(jsonInterface['abi'], ADDRESS);
-		contract.events.RoomCreated(function(error, result) {
+		contract.current = new Contract(jsonInterface['abi'], ADDRESS);
+		contract.current.events.RoomCreated(function(error, result) {
 			if (error) {
 				console.error(error);
 				return;
@@ -55,10 +55,10 @@ export default function Upload() {
 					url: returnValues.url
 				};
 			}
-			console.log(rooms);
+			console.log('Room created event fired:', rooms);
 			setRooms({...rooms});
 		});
-		contract.events.ProposalCreated(function(error, result) {
+		contract.current.events.ProposalCreated(function(error, result) {
 			if (error) {
 				console.error(error);
 				return;
@@ -67,7 +67,7 @@ export default function Upload() {
 				console.error('Result is null');
 				return;
 			}
-			console.log(result);
+			console.log('Proposal created event fired:', result);
 			// Do the job
 			// Check owner
 			if(result.returnValues.owner !== account) return;
@@ -83,15 +83,16 @@ export default function Upload() {
 			}
 			
 		});
-		contract.events.ProposalAccepted(function(error, result) {
+		contract.current.events.ProposalAccepted(function(error, result) {
 			if (error) console.log(error);
 			if (result === null) {
 				console.error('Result is null');
 				return;
 			}
-			console.log(result, result.returnValues.proposer === account, account);
+			console.log('Proposal accepted event fired:', result);
 			// Do the job
-			if(result.returnValues.proposer === account) handleConnectToPeerDatabase();
+			if(result.returnValues.proposer === account) 
+				handleConnectToPeerDatabase(result.returnValues.url);
 
 		});
 	}, []);
@@ -99,9 +100,10 @@ export default function Upload() {
 	// Connect to IPFS
 	useEffect(async () => {
 		// Connect to ipfs
-		if (!ipfs) {
+		if (!ipfs.current) {
 			const ipfs_local = await IPFS.create(ipfsOptions);
-			setIpfs(ipfs_local);
+			ipfs.current = ipfs_local;
+			console.log('IPFS loaded...', ipfs_local);
 		}
 	}, []);
 
@@ -132,15 +134,14 @@ export default function Upload() {
 	}, [DB]);
 
 	const handleCreateDB = async () => {
-		if (!ipfs) return;
+		if (!ipfs.current) return;
 		// Create identity https://github.com/orbitdb/orbit-db/blob/main/GUIDE.md#creating-an-identity
 		const Identities = require('orbit-db-identity-provider');
 		let options = { id: account };
 		const identity = await Identities.createIdentity(options);
-		console.log(identity);
 		// Create instance
 		// Mantain connection to pesist data
-		const orbitdb = await OrbitDB.createInstance(ipfs, { identity });
+		const orbitdb = await OrbitDB.createInstance(ipfs.current, { identity });
 		options = {
 			// Give write access to yourself at first
 			accessController: {
@@ -149,7 +150,7 @@ export default function Upload() {
 				],
 			},
 		};
-
+		console.log(orbitdb.identity);
 		// Create key value db
 		const db = await orbitdb.keyvalue(account, options);
 		setDB(db);
@@ -160,7 +161,7 @@ export default function Upload() {
 		// Update UI
 		setAddress(db.address.toString());
 		// Call smart contract
-		contract.methods.createRoom(db.address.toString()).send({ from: account, gasPrice: '20000000000' });
+		contract.current.methods.createRoom(db.address.toString()).send({ from: account, gasPrice: '20000000000' });
 		// Obtain DID from global context and upload it
 		const DID_safe = DID;
 		Object.keys(DID_safe).forEach((key) =>
@@ -176,11 +177,11 @@ export default function Upload() {
 			const Identities = require('orbit-db-identity-provider');
 			let options = { id: account };
 			const identity = await Identities.createIdentity(options);
-			setOrbitDBidentity(identity);
+			OrbitDBidentity.current = identity;
 			//Update state
 			setRequestedAddress(url);
 			// Call smart contract. The identity must be a string and parsed later.
-			contract.methods.createProposal(owner, JSON.stringify(identity)).send({ from: account, gasPrice: '20000000000' });
+			contract.current.methods.createProposal(owner, JSON.stringify(identity)).send({ from: account, gasPrice: '20000000000' });
 			
 		} catch (error) {
 			console.error(error);
@@ -188,34 +189,33 @@ export default function Upload() {
 	};
 	// eslint-disable-next-line no-unused-vars
 	const handleAcceptRequestToDatabase = async (identity, proposer) => {
+		const jsonInterface = JSON.parse(identity);
 		// Grant access to existing db.
-		await DB.access.grant('write', identity.publicKey);
+		await DB.access.grant('write', jsonInterface.publicKey);
+		console.log('Added pKey');
+		console.log(DB.identity);
 		// Contact smart contract
-		contract.methods.acceptProposal(proposer).send({ from: account, gasPrice: '20000000000' });
+		contract.current.methods.acceptProposal(proposer).send({ from: account, gasPrice: '20000000000' });
 		// Remove the notification
-		console.log(proposer, notifications);
 		const newNotificationsFiltered = notifications.map(n => {
-			console.log(n);
 			if (n.proposer !== proposer) {
 				return n;
 			}
 		});
-		// FIXME: Being empty cause the array to be undefined, while the scpread operator causes it to render an undefined [0] index.
-		console.log(newNotificationsFiltered);
-		if (newNotificationsFiltered !== undefined) {
+		if (newNotificationsFiltered.length > 0 &&  newNotificationsFiltered[0] !== undefined) {
 			setNotifications([...newNotificationsFiltered]);
 		} else {
 			setNotifications([]);
 		}
 	};
 	// eslint-disable-next-line no-unused-vars
-	const handleConnectToPeerDatabase = async () => {
+	const handleConnectToPeerDatabase = async (url) => {
 		// FIXME: ipfs is false (?)
-		if(!ipfs) return;
+		if(!ipfs.current) return;
 		// Create instance
-		const orbitdb = await OrbitDB.createInstance(ipfs, { identity: OrbitDBidentity });
+		const orbitdb = await OrbitDB.createInstance(ipfs.current, { identity: OrbitDBidentity.current });
 		// Connect to remote db
-		const db = await orbitdb.open(requestedAddress);
+		const db = await orbitdb.open(url, {type: 'keyvalue'});
 		setDB(db);
 		// Replicate db in local storage
 		await db.load();
@@ -302,7 +302,7 @@ export default function Upload() {
 		resultbytes.set(pbkdf2salt, 8);
 		resultbytes.set(cipherbytes, 16);
 
-		const file = await ipfs.add({ content: resultbytes });
+		const file = await ipfs.current.add({ content: resultbytes });
 		const payload = {
 			ipfsFile: file, // It might contain undefined
 			hexOfSyncKey: encryptedSyncKey.toString('hex'),
@@ -324,7 +324,7 @@ export default function Upload() {
 			params: [hexToDecrypt, account],
 		});
 		console.log(syncKey);
-		const stream = ipfs.cat(file.path);
+		const stream = ipfs.current.cat(file.path);
 		let data = new Uint8Array();
 
 		for await (const chunk of stream) {
