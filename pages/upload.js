@@ -23,7 +23,7 @@ export default function Upload() {
 	const [ requestedAddress, setRequestedAddress ] = useState('');
 	const [ notifications, setNotifications ] = useState([]);
 	const imageUpload = useRef();
-	const { ipfs, DID, DB, setDB, OrbitDBidentity, contract } = useAppContext();
+	const { ipfs, DID, DB, OrbitDBidentity, contract } = useAppContext();
 	const context = useWeb3React();
 	const { account, library, active } = context;
 
@@ -108,13 +108,13 @@ export default function Upload() {
 	}, []);
 
 	useEffect(() => {
-		if (!DB) return;
+		if (!DB.current) return;
 		// When the database is ready (ie. loaded), display results
-		DB.events.on('ready', () => {
-			setPeers({ ...DB.all });
+		DB.current.events.on('ready', () => {
+			setPeers({ ...DB.current.all });
 		});
 		// When database gets replicated with a peer, display results
-		DB.events.on('replicated', () => {
+		DB.current.events.on('replicated', () => {
 			/**
        * https://blog.logrocket.com/how-when-to-force-react-component-re-render/
        * React evaluates state changes by checking its shallow equality (or reference
@@ -125,13 +125,13 @@ export default function Upload() {
        *
        * https://reactjs.org/docs/react-component.html#state
        */
-			setPeers({ ...DB.all });
+			setPeers({ ...DB.current.all });
 		});
 		// When we update the database, display result
-		DB.events.on('write', () => {
-			setPeers({ ...DB.all });
+		DB.current.events.on('write', () => {
+			setPeers({ ...DB.current.all });
 		});
-	}, [DB]);
+	}, [DB.current]);
 
 	const handleCreateDB = async () => {
 		if (!ipfs.current) return;
@@ -153,7 +153,7 @@ export default function Upload() {
 		console.log(orbitdb.identity);
 		// Create key value db
 		const db = await orbitdb.keyvalue(account, options);
-		setDB(db);
+		DB.current = db;
 		// Replicate db in local storage
 		await db.load();
 		// Change UI after connection
@@ -191,9 +191,11 @@ export default function Upload() {
 	const handleAcceptRequestToDatabase = async (identity, proposer) => {
 		const jsonInterface = JSON.parse(identity);
 		// Grant access to existing db.
-		await DB.access.grant('write', jsonInterface.publicKey);
-		console.log('Added pKey');
-		console.log(DB.identity);
+		await DB.current.access.grant('write', jsonInterface.id);
+		console.log('Added id');
+		// await DB.current.access.grant('write', jsonInterface.publicKey);
+		// console.log('Added pKey');
+		// console.log(await DB.current.access.canAppend(jsonInterface, ));
 		// Contact smart contract
 		contract.current.methods.acceptProposal(proposer).send({ from: account, gasPrice: '20000000000' });
 		// Remove the notification
@@ -202,7 +204,7 @@ export default function Upload() {
 				return n;
 			}
 		});
-		if (newNotificationsFiltered.length > 0 &&  newNotificationsFiltered[0] !== undefined) {
+		if (newNotificationsFiltered.length > 0 && newNotificationsFiltered[0] !== undefined) {
 			setNotifications([...newNotificationsFiltered]);
 		} else {
 			setNotifications([]);
@@ -216,9 +218,10 @@ export default function Upload() {
 		const orbitdb = await OrbitDB.createInstance(ipfs.current, { identity: OrbitDBidentity.current });
 		// Connect to remote db
 		const db = await orbitdb.open(url, {type: 'keyvalue'});
-		setDB(db);
+		DB.current = db;
 		// Replicate db in local storage
 		await db.load();
+		// console.log(db.iden)
 		// Change UI after connection
 		setConnectionActive(true);
 		// Update UI
@@ -312,7 +315,7 @@ export default function Upload() {
 			payload.ipfsFile[key] === undefined ? delete payload.ipfsFile[key] : {}
 		);
 		console.log(payload);
-		await DB.put(
+		await DB.current.put(
 			'to' + selectedAddress + '-' + window.crypto.randomUUID(),
 			payload
 		);

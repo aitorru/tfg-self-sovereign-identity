@@ -7,7 +7,8 @@ export const AppContext = createContext(null);
 export const AppContextProvider = ({ children }) => {
 	const [DID, setDID] = React.useState(false);
 	const ipfs = React.useRef(false);
-	const [DB, setDB] = React.useState(false);
+	// const [DB, setDB] = React.useState(false);
+	const DB = React.useRef(false);
 	const OrbitDBidentity = React.useRef(false);
 	const contract = React.useRef(false);
 
@@ -23,7 +24,6 @@ export const AppContextProvider = ({ children }) => {
 			setDID,
 			ipfs,
 			DB,
-			setDB,
 			OrbitDBidentity,
 			contract,
 		}),
