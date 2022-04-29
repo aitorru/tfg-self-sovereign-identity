@@ -39,3 +39,7 @@ log.txt
 # Smart contracts
 /contracts/artifacts
 /contracts/swarm
+
+# LaTe
+docs/main.pdf
+
