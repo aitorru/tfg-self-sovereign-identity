@@ -36,6 +36,11 @@
 %Paquete para crear colores específicos según RGB.
 \usepackage{geometry}
 %Paquete para definir las dimensiones de los márgenes.
+\usepackage{listings}
+%Paquete para importar codigo
+\usepackage{dirtytalk}
+\usepackage{csquotes}
+%Paquete para meter quotes
 
 \definecolor{RBlue}{RGB}{23,33,110} 
 \definecolor{Rojo}{RGB}{255,0,0}
@@ -57,7 +62,7 @@
 \setlength{\parindent}{0cm}
 %Nuevamente se utiliza esta función para cambiar distancias del documento. Concretamente, en este caso se utiliza para cambiar la distancia de las sangrías al comenzar nuevo párrafo. Al marcar el valor en 0, se eliminan las sangrías del documento. Siempre se puede en momentos posteriores forzar la inclusión de alguna sangría o reescribir de nuevo el valor para indicar que a partir de ahí, comiencen las sangrías de nuevo.
 
-\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/ObjetivosAlcance}
+\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/3.ObjetivosAlcance}
 %Esta función es de gran importancia. Como se puede observar a la izquierda, hay una carpeta que se ha creado con diferentes capítulos. Estos capítulos son los diferentes apartados de la memoria en los que se va a ir escribiendo. Por ejemplo, el capítulo de la introducción, el capítulo de objetivos, el capítulo de la memoria técnica, o el capítulo del plan de trabajo. Bien, de cara a poder incluirlos a posteriori en esto documento principal (MAIN.tex) es necesario indicarle a LATEX que los cargue y eso se realiza con esta función. Así, habrá que incluir tantos parámetros como capítulos se deseen cargar. Los parámetros son simplemente la dirección de la carpeta en la que se encuentran, y su nombre.
 
 \geometry{top=3cm, bottom=3cm, left=3.5cm, right=2.5cm}

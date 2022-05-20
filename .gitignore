@@ -43,3 +43,12 @@ log.txt
 # LaTe
 docs/main.pdf
 
+docs/main.aux
+docs/main.fdb_latexmk
+docs/main.fls
+docs/main.lof
+docs/main.log
+docs/main.lot
+docs/main.out
+docs/main.toc
+docs/Chapter/*.aux
