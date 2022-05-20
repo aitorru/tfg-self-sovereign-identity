@@ -1,5 +1,0 @@
-\babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Sección}{2}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Subsección}{2}{subsection.1.1.1}%
-\contentsline {subsubsection}{\numberline {1.1.1.1}Subsubsección}{2}{subsubsection.1.1.1.1}%

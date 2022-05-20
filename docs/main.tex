@@ -43,6 +43,8 @@
 \definecolor{Naranja}{RGB}{255,222,199}
 \definecolor{GrisTabla}{RGB}{245,245,245}
 
+%Crear archivos aux si no existen
+
 \setcounter{secnumdepth}{3} 
 %Esta función permite que en el índice se indique hasta el sub-nivel número tres. Es decir que aparezcan hasta los apartados 1.1.1. Si se indicase {4}, se podrían observar hasta los sub-apartados 1.1.1.1. 
 
@@ -55,7 +57,7 @@
 \setlength{\parindent}{0cm}
 %Nuevamente se utiliza esta función para cambiar distancias del documento. Concretamente, en este caso se utiliza para cambiar la distancia de las sangrías al comenzar nuevo párrafo. Al marcar el valor en 0, se eliminan las sangrías del documento. Siempre se puede en momentos posteriores forzar la inclusión de alguna sangría o reescribir de nuevo el valor para indicar que a partir de ahí, comiencen las sangrías de nuevo.
 
-\includeonly{Chapter/1.Intro, Chapter/2.Objetivos, Chapter/Funciones}
+\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/ObjetivosAlcance}
 %Esta función es de gran importancia. Como se puede observar a la izquierda, hay una carpeta que se ha creado con diferentes capítulos. Estos capítulos son los diferentes apartados de la memoria en los que se va a ir escribiendo. Por ejemplo, el capítulo de la introducción, el capítulo de objetivos, el capítulo de la memoria técnica, o el capítulo del plan de trabajo. Bien, de cara a poder incluirlos a posteriori en esto documento principal (MAIN.tex) es necesario indicarle a LATEX que los cargue y eso se realiza con esta función. Así, habrá que incluir tantos parámetros como capítulos se deseen cargar. Los parámetros son simplemente la dirección de la carpeta en la que se encuentran, y su nombre.
 
 \geometry{top=3cm, bottom=3cm, left=3.5cm, right=2.5cm}
@@ -67,8 +69,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% COMIENZA EL DOCUMENTO (con la función \begin{document} %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\if@filesw
+    \immediate\write\@mainaux{\string\@input{#1.aux}}%
+\fi
 \begin{document}
+
 
 \pagestyle{fancy}
 %Esta función es utilizada para crear un nuevo estilo de formato, es el formato "fancy". En él vamos a determinar a continuación cómo se quieren posicionar pies de página, encabezados y demás.
@@ -122,13 +127,13 @@
 
 \thispagestyle{fancy}
 
-Internet evoluciona constantemente y la forma de interactuar de los usuarios con ella. Desde la web 2.0, el contenido principal de todas las páginas, es el generado y proporcionado por los usuarios. Muchas empresas han crecido hasta niveles desorbitados obteniendo y comercializando toda la información posible de sus usuarios.\\
+Internet evoluciona constantemente y la forma de interactuar de los usuarios con ella. Desde la web 2.0, el contenido principal de todas las páginas, es el generado y proporcionado por los usuarios. Muchas empresas han crecido hasta niveles desorbitados obteniendo y comercializando toda la información posible de sus usuarios.
 
-Con la web 3.0, se le puede devolver a los usuarios toda su información y todo su contenido. Como en la vida real, todos tenemos una cartera donde guardamos nuestro dinero y nuestras identidades. Así mismo, en internet funciona igual, tienes tu dinero e identidad en una cartera. Utilizando librerías web3 podemos comunicarnos con su cartera para poder identificarlo. Generamos un DID (Decentralized IDentifier - DNI descentralizado), con la posibilidad de abrir su archivador personal y guardar datos y documentos en él, como el que solemos tener en casa. Para que el uso de la web 3.0 sea satisfactoria, hay que conseguir que sea muy fácil iniciar sesión. Después de esto, se le asignará una cookie al usuario para que los siguientes accesos sean automáticos. En este proyecto, se investigará una implementación de identidad distribuida y sostenible.\\
+Con la web 3.0, se le puede devolver a los usuarios toda su información y todo su contenido. Como en la vida real, todos tenemos una cartera donde guardamos nuestro dinero y nuestras identidades. Así mismo, en internet funciona igual, tienes tu dinero e identidad en una cartera. Utilizando librerías web3 podemos comunicarnos con su cartera para poder identificarlo. Generamos un DID (Decentralized IDentifier - DNI descentralizado), con la posibilidad de abrir su archivador personal y guardar datos y documentos en él, como el que solemos tener en casa. Para que el uso de la web 3.0 sea satisfactoria, hay que conseguir que sea muy fácil iniciar sesión. Después de esto, se le asignará una cookie al usuario para que los siguientes accesos sean automáticos. En este proyecto, se investigará una implementación de identidad distribuida y sostenible.
 
-Esto se realizará priorizando la facilidad de uso y maximizando la posibilidad de implementación en todo tipo de páginas. También investigaremos la posibilidad de implementar esta identificación a todo Internet, haciendo posible que estas identidades se puedan usar desde la carpeta de salud hasta en la próxima red social de éxito. Todo esto mientras los usuarios son dueños de sus datos, compartiendo solo lo que quieren y nada más.\\
+Esto se realizará priorizando la facilidad de uso y maximizando la posibilidad de implementación en todo tipo de páginas. También investigaremos la posibilidad de implementar esta identificación a todo Internet, haciendo posible que estas identidades se puedan usar desde la carpeta de salud hasta en la próxima red social de éxito. Todo esto mientras los usuarios son dueños de sus datos, compartiendo solo lo que quieren y nada más.
 
-\textbf{Descriptores}\\
+\textbf{Descriptores}
 blockchain, IPFS, SSI, Identidad, Distribuida
 
 \newpage
@@ -142,11 +147,11 @@ blockchain, IPFS, SSI, Identidad, Distribuida
 %Nuevo capítulo para incluir el resumen (si se quiere también en inglés).
 
 \thispagestyle{fancy}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper non orci at fringilla. Etiam fermentum in diam vestibulum pellentesque. Nam volutpat, velit ut euismod mollis, ipsum erat facilisis justo, et tempor est lectus nec massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed accumsan viverra neque eu blandit. Suspendisse in fermentum felis, id iaculis mi. Quisque maximus quam lacus, non lobortis libero tincidunt at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas lectus nibh, sagittis ut felis non, fermentum ullamcorper leo. In hac habitasse platea dictumst. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce est dui, dapibus ultricies ipsum quis, ultrices maximus dolor. Proin finibus, lorem vulputate maximus convallis, quam tellus posuere magna, sed maximus nunc eros quis ipsum. Cras dignissim cursus lectus ac auctor. Donec suscipit vestibulum neque, sed lobortis est rhoncus non.\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper non orci at fringilla. Etiam fermentum in diam vestibulum pellentesque. Nam volutpat, velit ut euismod mollis, ipsum erat facilisis justo, et tempor est lectus nec massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed accumsan viverra neque eu blandit. Suspendisse in fermentum felis, id iaculis mi. Quisque maximus quam lacus, non lobortis libero tincidunt at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas lectus nibh, sagittis ut felis non, fermentum ullamcorper leo. In hac habitasse platea dictumst. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce est dui, dapibus ultricies ipsum quis, ultrices maximus dolor. Proin finibus, lorem vulputate maximus convallis, quam tellus posuere magna, sed maximus nunc eros quis ipsum. Cras dignissim cursus lectus ac auctor. Donec suscipit vestibulum neque, sed lobortis est rhoncus non.
 
-Praesent ut neque eros. Praesent vitae augue at diam tincidunt sagittis. In cursus lorem nec neque condimentum dictum. Morbi vel tristique orci. Cras luctus tempus elit tincidunt hendrerit. Proin bibendum arcu et sapien finibus vulputate sed eget leo. Duis at bibendum massa, sit amet ornare lorem. Donec dictum finibus fringilla. Duis accumsan lectus dolor, eu maximus ligula semper vel. Proin a sem tincidunt, mollis magna eget, consequat tortor. In sodales justo et varius scelerisque. Aliquam sit amet lacus mollis, tincidunt erat vitae, lacinia sem. Maecenas vel erat sagittis, semper ex in, commodo libero.\\
+Praesent ut neque eros. Praesent vitae augue at diam tincidunt sagittis. In cursus lorem nec neque condimentum dictum. Morbi vel tristique orci. Cras luctus tempus elit tincidunt hendrerit. Proin bibendum arcu et sapien finibus vulputate sed eget leo. Duis at bibendum massa, sit amet ornare lorem. Donec dictum finibus fringilla. Duis accumsan lectus dolor, eu maximus ligula semper vel. Proin a sem tincidunt, mollis magna eget, consequat tortor. In sodales justo et varius scelerisque. Aliquam sit amet lacus mollis, tincidunt erat vitae, lacinia sem. Maecenas vel erat sagittis, semper ex in, commodo libero.
 
-Integer malesuada quis elit eu eleifend. Suspendisse non vestibulum est, a fermentum urna. Donec ligula tortor, ultrices varius nisi eget, dictum malesuada augue. Fusce lacus orci, eleifend quis luctus dictum, ultricies id turpis. Vestibulum et auctor orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer facilisis neque quis dui dapibus dictum.\\
+Integer malesuada quis elit eu eleifend. Suspendisse non vestibulum est, a fermentum urna. Donec ligula tortor, ultrices varius nisi eget, dictum malesuada augue. Fusce lacus orci, eleifend quis luctus dictum, ultricies id turpis. Vestibulum et auctor orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer facilisis neque quis dui dapibus dictum.
 
 \textbf{Descriptors}\\
 Lorem, ipsum, dolor, sit, amet
@@ -203,7 +208,8 @@ Lorem, ipsum, dolor, sit, amet
 
 
 \include{Chapter/1.Intro}
-\include{Chapter/2.Objetivos}
+\include{Chapter/2.Estadodelarte}
+\include{Chapter/3.ObjetivosAlcance}
 %Funciones para incluir los otros documentos que se han desarrollado. Dichos documentos son los distintos capítulos de la memoria. Toda la escritura de los mismos se realizará en los documentos de forma específica y no en este archivo “MAIN.tex”. Así que vamos a ellos.
 
 \bibliographystyle{unsrt}
