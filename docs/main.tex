@@ -37,8 +37,29 @@
 \usepackage{geometry}
 %Paquete para definir las dimensiones de los márgenes.
 \usepackage{listings}
+\usepackage{xcolor}
+\usepackage{inconsolata}
+\lstset{
+    basicstyle=\ttfamily\small,
+    numberstyle=\footnotesize,
+    numbers=left,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    tabsize=2,
+    rulecolor=\color{black!30},
+    title=\lstname,
+    escapeinside={\%*}{*)},
+    breaklines=true,
+    breakatwhitespace=true,
+    framextopmargin=2pt,
+    framexbottommargin=2pt,
+    inputencoding=utf8,
+    extendedchars=true,
+    columns=fullflexible
+}
 %Paquete para importar codigo
 \usepackage{dirtytalk}
+\usepackage{mathtools}
 \usepackage{csquotes}
 %Paquete para meter quotes
 
@@ -62,7 +83,7 @@
 \setlength{\parindent}{0cm}
 %Nuevamente se utiliza esta función para cambiar distancias del documento. Concretamente, en este caso se utiliza para cambiar la distancia de las sangrías al comenzar nuevo párrafo. Al marcar el valor en 0, se eliminan las sangrías del documento. Siempre se puede en momentos posteriores forzar la inclusión de alguna sangría o reescribir de nuevo el valor para indicar que a partir de ahí, comiencen las sangrías de nuevo.
 
-\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/3.ObjetivosAlcance}
+\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/3.ObjetivosAlcance, Chapter/4.Metodologia, Chapter/5.HerramientasUtilizadas, Chapter/6.ProcesoDeSoftwareEjecutado}
 %Esta función es de gran importancia. Como se puede observar a la izquierda, hay una carpeta que se ha creado con diferentes capítulos. Estos capítulos son los diferentes apartados de la memoria en los que se va a ir escribiendo. Por ejemplo, el capítulo de la introducción, el capítulo de objetivos, el capítulo de la memoria técnica, o el capítulo del plan de trabajo. Bien, de cara a poder incluirlos a posteriori en esto documento principal (MAIN.tex) es necesario indicarle a LATEX que los cargue y eso se realiza con esta función. Así, habrá que incluir tantos parámetros como capítulos se deseen cargar. Los parámetros son simplemente la dirección de la carpeta en la que se encuentran, y su nombre.
 
 \geometry{top=3cm, bottom=3cm, left=3.5cm, right=2.5cm}
@@ -139,29 +160,10 @@ Con la web 3.0, se le puede devolver a los usuarios toda su información y todo 
 Esto se realizará priorizando la facilidad de uso y maximizando la posibilidad de implementación en todo tipo de páginas. También investigaremos la posibilidad de implementar esta identificación a todo Internet, haciendo posible que estas identidades se puedan usar desde la carpeta de salud hasta en la próxima red social de éxito. Todo esto mientras los usuarios son dueños de sus datos, compartiendo solo lo que quieren y nada más.
 
 \textbf{Descriptores}
-blockchain, IPFS, SSI, Identidad, Distribuida
+blockchain, IPFS \cite{web:ipfs}, SSI, Identidad, Distribuida
 
 \newpage
 %Función para incluir un salto a una nueva página.
-\thispagestyle{empty}
-%Función para que dicha página no tenga ningún formato (ni número, ni encabezado).
-
-%Así con estas dos funciones de forma consecutiva se crea una página en blanco.
-
-\chapter*{Abstract}
-%Nuevo capítulo para incluir el resumen (si se quiere también en inglés).
-
-\thispagestyle{fancy}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper non orci at fringilla. Etiam fermentum in diam vestibulum pellentesque. Nam volutpat, velit ut euismod mollis, ipsum erat facilisis justo, et tempor est lectus nec massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed accumsan viverra neque eu blandit. Suspendisse in fermentum felis, id iaculis mi. Quisque maximus quam lacus, non lobortis libero tincidunt at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas lectus nibh, sagittis ut felis non, fermentum ullamcorper leo. In hac habitasse platea dictumst. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce est dui, dapibus ultricies ipsum quis, ultrices maximus dolor. Proin finibus, lorem vulputate maximus convallis, quam tellus posuere magna, sed maximus nunc eros quis ipsum. Cras dignissim cursus lectus ac auctor. Donec suscipit vestibulum neque, sed lobortis est rhoncus non.
-
-Praesent ut neque eros. Praesent vitae augue at diam tincidunt sagittis. In cursus lorem nec neque condimentum dictum. Morbi vel tristique orci. Cras luctus tempus elit tincidunt hendrerit. Proin bibendum arcu et sapien finibus vulputate sed eget leo. Duis at bibendum massa, sit amet ornare lorem. Donec dictum finibus fringilla. Duis accumsan lectus dolor, eu maximus ligula semper vel. Proin a sem tincidunt, mollis magna eget, consequat tortor. In sodales justo et varius scelerisque. Aliquam sit amet lacus mollis, tincidunt erat vitae, lacinia sem. Maecenas vel erat sagittis, semper ex in, commodo libero.
-
-Integer malesuada quis elit eu eleifend. Suspendisse non vestibulum est, a fermentum urna. Donec ligula tortor, ultrices varius nisi eget, dictum malesuada augue. Fusce lacus orci, eleifend quis luctus dictum, ultricies id turpis. Vestibulum et auctor orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer facilisis neque quis dui dapibus dictum.
-
-\textbf{Descriptors}\\
-Lorem, ipsum, dolor, sit, amet
-
-\newpage
 \thispagestyle{empty}
 
 \fancypagestyle{plain}
@@ -215,6 +217,9 @@ Lorem, ipsum, dolor, sit, amet
 \include{Chapter/1.Intro}
 \include{Chapter/2.Estadodelarte}
 \include{Chapter/3.ObjetivosAlcance}
+\include{Chapter/4.Metodologia}
+\include{Chapter/5.HerramientasUtilizadas}
+\include{Chapter/6.ProcesoDeSoftwareEjecutado}
 %Funciones para incluir los otros documentos que se han desarrollado. Dichos documentos son los distintos capítulos de la memoria. Toda la escritura de los mismos se realizará en los documentos de forma específica y no en este archivo “MAIN.tex”. Así que vamos a ellos.
 
 \bibliographystyle{unsrt}

@@ -1,0 +1,307 @@
+\begin{thebibliography}{10}
+
+\bibitem{web:ipfs}
+IPFS.
+\newblock Ipfs powers the distributed web, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:ssi_wikipedia}
+Wikipedia.
+\newblock Auto-identidad soberana, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:identidad2o_wikipedia}
+Wikipedia.
+\newblock Identidad 2.0, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:participacion}
+Revista~Mediterránea de~Comunicación.
+\newblock La cultura de la participación, 2013.4.2.17.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:p2p}
+Wikipedia.
+\newblock Peer-to-peer, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:blockchain}
+Wikipedia.
+\newblock Cadena de bloques, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:robo_de_identidad}
+Wikipedia.
+\newblock Robo de identidad, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:ciberataques}
+portaltic.
+\newblock Los ciberataques más importantes de 2021 en españa: Sepe, phone
+  house o mediamarkt, 2021.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:CA}
+Wikipedia.
+\newblock Escándalo facebook-cambridge analytica, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:huella}
+Wikipedia.
+\newblock Huella digital en internet, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:gigantes}
+Wikipedia.
+\newblock Gigantes tecnológicos, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:EBSI}
+Portal administración electrónica.
+\newblock Ebsi: la infraestructura europea de blockchain en marcha, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:eIDAS}
+Wikipedia.
+\newblock eidas, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:CE}
+Comisión Europea.
+\newblock Reglamento del parlamento europeo y del consejo, 2021.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:perm}
+Jake Frankenfield.
+\newblock Permissioned blockchain, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:solidity}
+Solidity.
+\newblock Solidity, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:ganache}
+Ganache.
+\newblock One click blockchain, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:hardhat}
+HardHat.
+\newblock Ethereum development environment for professionals, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:pos}
+Wikipedia.
+\newblock Proof of stake, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:cardano_dev}
+Cardano.
+\newblock Cardano developer portal, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:sovrin}
+Sovrin.
+\newblock Home - sovrin, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:eth_energy}
+Carl Beekhuizen.
+\newblock Ethereum's energy usage will soon decrease by ~99.95%, 2021.
+\newblock Act. 5 de junio de 2022.
+
+\bibitem{web:carbono}
+Digiconomist.
+\newblock Ethereum energy consumption index, 2022.
+\newblock Act. 5 de junio de 2022.
+
+\bibitem{web:eip_bomb}
+Thomas Jay~Rush Tim~Beiko, James~Hancock.
+\newblock Eip-4345: Difficulty bomb delay to june 2022, 2021.
+\newblock Act. 5 de junio de 2022.
+
+\bibitem{web:sample_smart_contract}
+Joseph Cook.
+\newblock Introduction to smart contracts, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:gas_price}
+YCharts.
+\newblock Ethereum average gas price, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:reddit_ethereum}
+Liberosist.
+\newblock Addressing common criticisms about ethereum, 2021.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:reddit_ethereum_comment}
+Liberosist.
+\newblock Addressing common criticisms about ethereum (comment), 2021.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:EIP}
+Vitalik Buterin.
+\newblock Ethereum imporvement proposals, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:ipfs_whatis}
+IPFS.
+\newblock What is ipfs?, 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:js-ipfs}
+js~ipfs.
+\newblock A full p2p protocol written entirely in javascript, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:webtorrent}
+webtorrent.
+\newblock The streaming torrent client. for node.js and the web., 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:webtorrent_faq}
+webtorrent.
+\newblock Frequently asked questions, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:ipfs_modularity}
+IPFS.
+\newblock Privacy and encryption, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:asimetrica}
+Wikipedia.
+\newblock Criptografía asimétrica, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:tweetnacl}
+TweetNaCl.js.
+\newblock Tweetnacl.js is a port of tweetnacl / nacl to javascript. it
+  implements secret-key authenticated encryption, public-key authenticated
+  encryption, hashing, and public-key signatures. high-level crypto library in
+  only 7 kb (minified and gzipped)!, 2022.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:tweetnacl_elevator}
+Matthew Green.
+\newblock The anatomy of a bad idea, 2012.
+\newblock Act. 2 de junio de 2022.
+
+\bibitem{web:notion}
+Notion.
+\newblock One workspace. every team., 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:wikipedia_main}
+Wikipedia.
+\newblock Wikipedia, the free encyclopedia, 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:next.js}
+next.js.
+\newblock The react framework for production, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:canIuse}
+Can~I use.
+\newblock Javascript modules: dynamic import(), 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:ecma}
+Kevin~Gibbons Shu-yu Guo, Michael~Ficarra and the community.
+\newblock Ecmascript® 2023 language specification, 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:next_supported}
+Next.js.
+\newblock Supported browsers and features, 2022.
+\newblock Act. 3 de junio de 2022.
+
+\bibitem{web:repo}
+Aitor~Ruiz Garcia.
+\newblock tfg-self-sovereign-identity, 2021.
+\newblock Act. 5 de junio de 2022.
+
+\bibitem{web:code-oss}
+Arch wiki.
+\newblock Visual studio code, 2022.
+\newblock Act. 5 de junio de 2022.
+
+\bibitem{web:did-spec}
+... Christian~Gribneau, Michael~Prorock.
+\newblock did:web method specification, 2021.
+\newblock Act. 6 de junio de 2022.
+
+\bibitem{web:LICENSE}
+Inc Free Software~Foundation.
+\newblock Gnu general public license, 2007.
+\newblock Act. 6 de junio de 2022.
+
+\bibitem{web:metamask_wiki}
+Metamask.
+\newblock Metamask docs, 2007.
+\newblock Act. 7 de junio de 2022.
+
+\bibitem{web:spa}
+Wikipedia.
+\newblock Single-page application, 2022.
+\newblock Act. 7 de junio de 2022.
+
+\bibitem{web:unix-like}
+Wikipedia.
+\newblock Unix-like, 2022.
+\newblock Act. 7 de junio de 2022.
+
+\bibitem{web:arch}
+Wikipedia.
+\newblock Arch linux, 2022.
+\newblock Act. 7 de junio de 2022.
+
+\bibitem{web:npm}
+Wikipedia.
+\newblock npm (software), 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:eslint}
+ESLint.
+\newblock Find and fix problems in your javascript code, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:ddr}
+Tobias Persson.
+\newblock Bitsquid tech benefits of a data-driven renderer, 2011.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:relational-database}
+Wikipedia.
+\newblock Relational database, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:redis}
+Wikipedia.
+\newblock Redis, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:hash-table}
+Wikipedia.
+\newblock Hash table, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:mongodb}
+Wikipedia.
+\newblock Mongodb, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:did}
+Wikipedia.
+\newblock Decentralized identifier, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:aragon}
+Aragon.
+\newblock How to use metamask, 2022.
+\newblock Act. 9 de junio de 2022.
+
+\end{thebibliography}
