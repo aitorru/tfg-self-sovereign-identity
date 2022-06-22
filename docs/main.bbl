@@ -1,10 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{web:ipfs}
-IPFS.
-\newblock Ipfs powers the distributed web, 2022.
-\newblock Act. 2 de junio de 2022.
-
 \bibitem{web:ssi_wikipedia}
 Wikipedia.
 \newblock Auto-identidad soberana, 2022.
@@ -17,7 +12,7 @@ Wikipedia.
 
 \bibitem{web:participacion}
 Revista~Mediterránea de~Comunicación.
-\newblock La cultura de la participación, 2013.4.2.17.
+\newblock La cultura de la participación, 2013.
 \newblock Act. 2 de junio de 2022.
 
 \bibitem{web:p2p}
@@ -36,7 +31,7 @@ Wikipedia.
 \newblock Act. 10 de junio de 2022.
 
 \bibitem{web:ciberataques}
-portaltic.
+Portaltic.
 \newblock Los ciberataques más importantes de 2021 en españa: Sepe, phone
   house o mediamarkt, 2021.
 \newblock Act. 10 de junio de 2022.
@@ -71,6 +66,36 @@ Comisión Europea.
 \newblock Reglamento del parlamento europeo y del consejo, 2021.
 \newblock Act. 10 de junio de 2022.
 
+\bibitem{web:did-spec}
+... Christian~Gribneau, Michael~Prorock.
+\newblock did:web method specification, 2021.
+\newblock Act. 6 de junio de 2022.
+
+\bibitem{web:pow}
+Wikipedia.
+\newblock Proof of work, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:bitcoin_p}
+Josh Howarth.
+\newblock How many people own bitcoin? 95 blockchain statistics, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:ethereum_p}
+Tor Constantino.
+\newblock More people own ethereum than ever before. here's why, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:pos}
+Wikipedia.
+\newblock Proof of stake, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:cardano_p}
+Tomiwabold Olajide.
+\newblock Cardano active users remain constant past 100,000: Details, 2022.
+\newblock Act. 10 de junio de 2022.
+
 \bibitem{web:perm}
 Jake Frankenfield.
 \newblock Permissioned blockchain, 2022.
@@ -91,11 +116,6 @@ HardHat.
 \newblock Ethereum development environment for professionals, 2022.
 \newblock Act. 10 de junio de 2022.
 
-\bibitem{web:pos}
-Wikipedia.
-\newblock Proof of stake, 2022.
-\newblock Act. 10 de junio de 2022.
-
 \bibitem{web:cardano_dev}
 Cardano.
 \newblock Cardano developer portal, 2022.
@@ -105,6 +125,46 @@ Cardano.
 Sovrin.
 \newblock Home - sovrin, 2022.
 \newblock Act. 10 de junio de 2022.
+
+\bibitem{web:decentralization}
+Wikipedia.
+\newblock Decentralization, 2022.
+\newblock Act. 16 de junio de 2022.
+
+\bibitem{web:transaction}
+Tarun Batra.
+\newblock Transactions, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:keyword}
+Wikipedia.
+\newblock Palabra clave, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:block}
+Ethereum.
+\newblock Blocks, 2022.
+\newblock Act. 16 de junio de 2022.
+
+\bibitem{web:hash}
+Wikipedia.
+\newblock Función hash, 2022.
+\newblock Act. 14 de junio de 2022.
+
+\bibitem{web:checksum}
+Wikipedia.
+\newblock Suma de verificación, 2022.
+\newblock Act. 14 de junio de 2022.
+
+\bibitem{web:mining}
+wackerow.
+\newblock Mining, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:gas_price}
+YCharts.
+\newblock Ethereum average gas price, 2022.
+\newblock Act. 2 de junio de 2022.
 
 \bibitem{web:eth_energy}
 Carl Beekhuizen.
@@ -121,15 +181,25 @@ Thomas Jay~Rush Tim~Beiko, James~Hancock.
 \newblock Eip-4345: Difficulty bomb delay to june 2022, 2021.
 \newblock Act. 5 de junio de 2022.
 
+\bibitem{web:london}
+Ethereum.
+\newblock The history of ethereum, 2022.
+\newblock Act. 10 de junio de 2022.
+
+\bibitem{web:scontract}
+Wikipedia.
+\newblock Contrato inteligente, 2022.
+\newblock Act. 14 de junio de 2022.
+
 \bibitem{web:sample_smart_contract}
 Joseph Cook.
 \newblock Introduction to smart contracts, 2022.
 \newblock Act. 2 de junio de 2022.
 
-\bibitem{web:gas_price}
-YCharts.
-\newblock Ethereum average gas price, 2022.
-\newblock Act. 2 de junio de 2022.
+\bibitem{web:DSL}
+Wikipedia.
+\newblock Lenguaje específico de dominio, 2022.
+\newblock Act. 14 de junio de 2022.
 
 \bibitem{web:reddit_ethereum}
 Liberosist.
@@ -151,15 +221,30 @@ IPFS.
 \newblock What is ipfs?, 2022.
 \newblock Act. 3 de junio de 2022.
 
+\bibitem{web:ipfs}
+IPFS.
+\newblock Ipfs powers the distributed web, 2022.
+\newblock Act. 2 de junio de 2022.
+
 \bibitem{web:js-ipfs}
 js~ipfs.
 \newblock A full p2p protocol written entirely in javascript, 2022.
 \newblock Act. 8 de junio de 2022.
 
+\bibitem{web:go-ipfs}
+IPFS.
+\newblock go-ipfs, 2022.
+\newblock Act. 10 de junio de 2022.
+
 \bibitem{web:webtorrent}
 webtorrent.
 \newblock The streaming torrent client. for node.js and the web., 2022.
 \newblock Act. 2 de junio de 2022.
+
+\bibitem{web:torrent}
+webtorrent.
+\newblock The streaming torrent client. for node.js and the web., 2022.
+\newblock Act. 14 de junio de 2022.
 
 \bibitem{web:webtorrent_faq}
 webtorrent.
@@ -170,6 +255,11 @@ webtorrent.
 IPFS.
 \newblock Privacy and encryption, 2022.
 \newblock Act. 2 de junio de 2022.
+
+\bibitem{web:bias}
+IPFS.
+\newblock Privacy and encryption, 2022.
+\newblock Act. 14 de junio de 2022.
 
 \bibitem{web:asimetrica}
 Wikipedia.
@@ -194,15 +284,35 @@ Notion.
 \newblock One workspace. every team., 2022.
 \newblock Act. 3 de junio de 2022.
 
+\bibitem{web:next.js}
+next.js.
+\newblock The react framework for production, 2022.
+\newblock Act. 8 de junio de 2022.
+
+\bibitem{web:framework}
+Wikipedia.
+\newblock Web framework, 2022.
+\newblock Act. 14 de junio de 2022.
+
+\bibitem{web:ssr}
+Wikipedia.
+\newblock Server-side scripting, 2022.
+\newblock Act. 14 de junio de 2022.
+
+\bibitem{web:isr}
+Next.js.
+\newblock Incremental static regeneration, 2022.
+\newblock Act. 14 de junio de 2022.
+
 \bibitem{web:wikipedia_main}
 Wikipedia.
 \newblock Wikipedia, the free encyclopedia, 2022.
 \newblock Act. 3 de junio de 2022.
 
-\bibitem{web:next.js}
-next.js.
-\newblock The react framework for production, 2022.
-\newblock Act. 8 de junio de 2022.
+\bibitem{web:gateways}
+IPFS.
+\newblock Public gateways, 2022.
+\newblock Act. 16 de junio de 2022.
 
 \bibitem{web:canIuse}
 Can~I use.
@@ -219,6 +329,11 @@ Next.js.
 \newblock Supported browsers and features, 2022.
 \newblock Act. 3 de junio de 2022.
 
+\bibitem{web:remix}
+Remix IDE.
+\newblock Deploy and run in the blockchain, 2022.
+\newblock Act. 16 de junio de 2022.
+
 \bibitem{web:repo}
 Aitor~Ruiz Garcia.
 \newblock tfg-self-sovereign-identity, 2021.
@@ -229,20 +344,20 @@ Arch wiki.
 \newblock Visual studio code, 2022.
 \newblock Act. 5 de junio de 2022.
 
-\bibitem{web:did-spec}
-... Christian~Gribneau, Michael~Prorock.
-\newblock did:web method specification, 2021.
-\newblock Act. 6 de junio de 2022.
-
 \bibitem{web:LICENSE}
 Inc Free Software~Foundation.
 \newblock Gnu general public license, 2007.
 \newblock Act. 6 de junio de 2022.
 
-\bibitem{web:metamask_wiki}
+\bibitem{web:Metamask_wiki}
 Metamask.
 \newblock Metamask docs, 2007.
 \newblock Act. 7 de junio de 2022.
+
+\bibitem{web:jsx}
+Wikipedia.
+\newblock Jsx (javascript), 2022.
+\newblock Act. 14 de junio de 2022.
 
 \bibitem{web:spa}
 Wikipedia.
@@ -264,6 +379,11 @@ Wikipedia.
 \newblock npm (software), 2022.
 \newblock Act. 8 de junio de 2022.
 
+\bibitem{web:yarn}
+Wikipedia.
+\newblock Yarn, 2022.
+\newblock Act. 14 de junio de 2022.
+
 \bibitem{web:eslint}
 ESLint.
 \newblock Find and fix problems in your javascript code, 2022.
@@ -273,6 +393,11 @@ ESLint.
 Tobias Persson.
 \newblock Bitsquid tech benefits of a data-driven renderer, 2011.
 \newblock Act. 8 de junio de 2022.
+
+\bibitem{web:race}
+Wikipedia.
+\newblock Condición de carrera, 2022.
+\newblock Act. 14 de junio de 2022.
 
 \bibitem{web:relational-database}
 Wikipedia.
@@ -303,5 +428,45 @@ Wikipedia.
 Aragon.
 \newblock How to use metamask, 2022.
 \newblock Act. 9 de junio de 2022.
+
+\bibitem{web:mit}
+Scott Chacon.
+\newblock Mit license, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:bundle}
+Shubham Kanodia.
+\newblock Bunclephobia, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:mini}
+Wikipedia.
+\newblock Minification (programming), 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:acceptance}
+GeeksforGeeks.
+\newblock Acceptance testing | software testing, 2019.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:perf}
+Tarek Ahmed~Helmy Omar Abdullah~Lajam.
+\newblock Performance evaluation of ipfs in private networks, 2021.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:ftp}
+Wikipedia.
+\newblock File transfer protocol, 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:OrbitDBalpha}
+OrbitDB.
+\newblock Orbitdb is a serverless, distributed, peer-to-peer database., 2022.
+\newblock Act. 12 de junio de 2022.
+
+\bibitem{web:localfirst}
+Martin Kleppmann.
+\newblock Local-first software, 2019.
+\newblock Act. 12 de junio de 2022.
 
 \end{thebibliography}

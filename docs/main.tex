@@ -1,4 +1,4 @@
-\documentclass[a4paper,openright,10pt]{book}
+\documentclass[a4paper,openright,11pt]{book}
 
 \usepackage[utf8]{inputenc}
 %PAQUETEB para incluir acentos al escribir en Castellano.
@@ -57,7 +57,7 @@
     extendedchars=true,
     columns=fullflexible
 }
-%Paquete para importar codigo
+%Paquete para importar código
 \usepackage{dirtytalk}
 \usepackage{mathtools}
 \usepackage{csquotes}
@@ -83,7 +83,7 @@
 \setlength{\parindent}{0cm}
 %Nuevamente se utiliza esta función para cambiar distancias del documento. Concretamente, en este caso se utiliza para cambiar la distancia de las sangrías al comenzar nuevo párrafo. Al marcar el valor en 0, se eliminan las sangrías del documento. Siempre se puede en momentos posteriores forzar la inclusión de alguna sangría o reescribir de nuevo el valor para indicar que a partir de ahí, comiencen las sangrías de nuevo.
 
-\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/3.ObjetivosAlcance, Chapter/4.Metodologia, Chapter/5.HerramientasUtilizadas, Chapter/6.ProcesoDeSoftwareEjecutado}
+\includeonly{Chapter/1.Intro, Chapter/2.Estadodelarte, Chapter/3.ObjetivosAlcance, Chapter/4.Metodologia, Chapter/6.ProcesoDeSoftwareEjecutado, Chapter/7.PlanificacionyPesupuesto, Chapter/8.ValoracionEtica, Chapter/9.Conclusiones}
 %Esta función es de gran importancia. Como se puede observar a la izquierda, hay una carpeta que se ha creado con diferentes capítulos. Estos capítulos son los diferentes apartados de la memoria en los que se va a ir escribiendo. Por ejemplo, el capítulo de la introducción, el capítulo de objetivos, el capítulo de la memoria técnica, o el capítulo del plan de trabajo. Bien, de cara a poder incluirlos a posteriori en esto documento principal (MAIN.tex) es necesario indicarle a LATEX que los cargue y eso se realiza con esta función. Así, habrá que incluir tantos parámetros como capítulos se deseen cargar. Los parámetros son simplemente la dirección de la carpeta en la que se encuentran, y su nombre.
 
 \geometry{top=3cm, bottom=3cm, left=3.5cm, right=2.5cm}
@@ -134,7 +134,7 @@
 \renewcommand{\headrulewidth}{0pt} 
 %Esta función sirve para renovar todo tipo de comandos o distancias en el documento. Concretamente, en este caso se indica que no exista (grosor 0pt) una linea debajo del encabezado que lo separe del texto.
 
-\includepdf[]{PortadaPFGVAux}
+\includepdf[pages={1-}]{PortadaPFGVAux}
 %Esta función incluye el PDF de la portada correspondiente al TFG. Dicho documento PDF ha de estar cargado en el menú de la izquierda como se encuentra esta portada auxiliar. Es importante incluir en el parámetro obligatorio la dirección a dicho PDF con su normbre correspondiente.
 
 \newpage
@@ -159,8 +159,8 @@ Con la web 3.0, se le puede devolver a los usuarios toda su información y todo 
 
 Esto se realizará priorizando la facilidad de uso y maximizando la posibilidad de implementación en todo tipo de páginas. También investigaremos la posibilidad de implementar esta identificación a todo Internet, haciendo posible que estas identidades se puedan usar desde la carpeta de salud hasta en la próxima red social de éxito. Todo esto mientras los usuarios son dueños de sus datos, compartiendo solo lo que quieren y nada más.
 
-\textbf{Descriptores}
-blockchain, IPFS \cite{web:ipfs}, SSI, Identidad, Distribuida
+\textbf{Descriptores}:
+\textit{Blockchain}, IPFS, SSI, Identidad, Web descentralizada
 
 \newpage
 %Función para incluir un salto a una nueva página.
@@ -218,13 +218,91 @@ blockchain, IPFS \cite{web:ipfs}, SSI, Identidad, Distribuida
 \include{Chapter/2.Estadodelarte}
 \include{Chapter/3.ObjetivosAlcance}
 \include{Chapter/4.Metodologia}
-\include{Chapter/5.HerramientasUtilizadas}
 \include{Chapter/6.ProcesoDeSoftwareEjecutado}
+\include{Chapter/7.PlanificacionyPesupuesto}
+\include{Chapter/8.ValoracionEtica}
+\include{Chapter/9.Conclusiones}
 %Funciones para incluir los otros documentos que se han desarrollado. Dichos documentos son los distintos capítulos de la memoria. Toda la escritura de los mismos se realizará en los documentos de forma específica y no en este archivo “MAIN.tex”. Así que vamos a ellos.
 
 \bibliographystyle{unsrt}
 %Función que indica el estilo de bibliografía a utilizar.
+\fancyhead[LE]{}
 \bibliography{References.bib}
 %Función que incluye la biblografía en el documento.
-
+\newpage
+\chapter{Glosario de abreviaturas}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ c  c  c }
+        DID     & Decentralized iDentifier          & Identificador descentralizado \\
+        DNI     & -                                 & Documento Nacional de Identidad \\
+        IPFS    & InterPlanetary File System        & Sistema de archivos interplanetario\\
+        SSI     & Self-sovereign identity           & Identidad autosoberana \\
+        DLT     & Distributed Ledger Technology     & Tecnología de Registro Distribuido \\
+        P2P     & Peer-to-peer                      & Red entre iguales \\
+        EBP     & European Blockchain Partnership   & Asociación Europea de Blockchain \\
+        EBSI    & European Blockchain Services      & Infraestructura europea de servicios \\
+                & Infrastructure                    & de cadena de bloques (blockchain) \\
+        ESSIF   & European Self Sovereign Identity  & Marco Europeo de Identidad Auto \\
+                & Framework                         & Soberana \\
+        eIDAS   & electronic IDentification,        & Sistema Europeo de reconocimiento \\
+                & Authentication and trust Services & de identidades electrónicas \\
+        JSON    & JavaScript Object Notation        & Notación de objeto de JavaScript \\
+        PoW     & Proof of Work                     & Sistema de prueba de trabajo \\
+        PoS     & Proof of Stake                    & Sistema de prueba de participación \\
+        SHA     & Secure Hash Algorithm             & Algoritmos de hash seguro \\
+        DSL     & Domain-Specific language          & Lenguaje específico del Dominio \\
+        EIP     & Ethereum Improvement Proposal     & Propuesta de Mejora de Ethereum \\
+        CID     & Content IDentifier                & Identificador de contenido \\
+        AES     & Advanced Encryption Standard      & Estándar de Encriptación Avanzada \\
+        KPI     & Key Performance Indicator         & Indicador clave de rendimiento \\
+        SSR     & Server-Side Rendering             & Representación del lado del servidor \\
+        ISR     & Incremental Static Rendering      & Representación estática incremental \\
+        HTML    & HyperText Markup Language         & Lenguaje de marcas de hipertexto \\
+        API     & Application Programming Interface & Interfaz de programación de \\
+                &                                   & aplicaciones \\
+    \end{tabular}
+\end{table}
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{c c c}
+        JS      & JavaScript                        & - \\
+        CSS     & Cascading Style Sheets            & Hojas de estilo en cascada \\
+        MVC     & Model-view-controller             & Modelo-vista-controlador   \\
+        UI      & User Interface                    & Interfaz de usuario \\
+        DB      & Database                          & Base de datos \\
+        FTP     & File Transfer Protocol            & Protocolo de transferencia de \\
+                &                                   & archivos \\
+        CPU     & Central Processing Unit           & Unidad central de procesamiento \\
+        RAM     & Random-Access Memory              & Memoria de acceso aleatorio \\
+    \end{tabular}
+\end{table}
+\newpage
+\chapter{Agradecimientos}
+En primer lugar, me gustaría agradecer a la Universidad de Deusto y a mi entorno por hacer este viaje agradable y enriquecedor. A todos mis profesores, gracias \dots Pero sobre todo \dots \\
+\\
+A Diego López de Ipiña por confiar en mi e introducirme en la Web Distribuida.\\
+\\
+A Ama y Aita, por darme todo y regalarme todas las experiencias de mi vida.\\
+\\
+A mi tia por ayudarme con cualquier duda y estar siempre ahí para aconsejarme.\\
+\\
+A mis amigos por seguir ahí, aunque no les dediqué mucho tiempo.\\
+\\
+A todos, gracias \dots
+\newpage
+\chapter{Apéndice}
+\section{README}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/gh1.png}
+    \caption{README pt1}
+    \cite{web:repo}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/gh2.png}
+    \caption{README pt2}
+    \cite{web:repo}
+\end{figure}
 \end{document}

@@ -5,48 +5,50 @@ A level-1 auxiliary file: Chapter/1.Intro.aux
 A level-1 auxiliary file: Chapter/2.Estadodelarte.aux
 A level-1 auxiliary file: Chapter/3.ObjetivosAlcance.aux
 A level-1 auxiliary file: Chapter/4.Metodologia.aux
-A level-1 auxiliary file: Chapter/5.HerramientasUtilizadas.aux
 A level-1 auxiliary file: Chapter/6.ProcesoDeSoftwareEjecutado.aux
+A level-1 auxiliary file: Chapter/7.PlanificacionyPesupuesto.aux
+A level-1 auxiliary file: Chapter/8.ValoracionEtica.aux
+A level-1 auxiliary file: Chapter/9.Conclusiones.aux
 The style file: unsrt.bst
 Database file #1: References.bib
-You've used 60 entries,
+You've used 93 entries,
             1791 wiz_defined-function locations,
-            627 strings with 7155 characters,
-and the built_in function-call counts, 7660 in all, are:
-= -- 601
-> -- 244
+            713 strings with 8586 characters,
+and the built_in function-call counts, 11851 in all, are:
+= -- 931
+> -- 376
 < -- 0
-+ -- 121
-- -- 61
-* -- 64
-:= -- 1154
-add.period$ -- 180
-call.type$ -- 60
-change.case$ -- 60
++ -- 187
+- -- 94
+* -- 97
+:= -- 1781
+add.period$ -- 279
+call.type$ -- 93
+change.case$ -- 93
 chr.to.int$ -- 0
-cite$ -- 60
-duplicate$ -- 300
-empty$ -- 1081
-format.name$ -- 61
-if$ -- 1805
+cite$ -- 93
+duplicate$ -- 465
+empty$ -- 1675
+format.name$ -- 94
+if$ -- 2795
 int.to.chr$ -- 0
-int.to.str$ -- 60
+int.to.str$ -- 93
 missing$ -- 0
-newline$ -- 303
-num.names$ -- 60
-pop$ -- 420
+newline$ -- 468
+num.names$ -- 93
+pop$ -- 651
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 180
+skip$ -- 279
 stack$ -- 0
 substring$ -- 0
-swap$ -- 60
+swap$ -- 93
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 60
-width$ -- 62
-write$ -- 602
+while$ -- 93
+width$ -- 95
+write$ -- 932

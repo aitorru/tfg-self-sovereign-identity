@@ -1,0 +1,36 @@
+\chapter{Valoración ética}\label{Valoracion etica}
+%Función que crea el título de capítulo y al cual se le da el nombre deseado a través de su parámetro obligatorio. Al no tener la función el “*” se escribirá también en el título del documento las palabras “Capítulo 1: …”. Además se indica, mediante la función “\label”, la correspondiente etiqueta que lleva asociada. La etiqueta sirve para que en caso de que luego se quiera hacer referencia al capítulo se haga llamando etiqueta tal que se escribiría “La información correspondiente a dicho tema se encuentra en el capítulo \ref{Int}.”
+
+\thispagestyle{fancy}
+%Función que determina que durante este capítulo se aplique el estilo Fancy.
+
+\fancyhead[LE]{\thechapter.Valoración ética}
+%Función que se utiliza para indicar que en las páginas impares, aparezca en el encabezado en la parte izquierda, el número del capítulo con su correspondiente nombre.
+
+ Este proyecto busca responder a la necesidad de privacidad de la sociedad moderna. En la no tan reciente revolución del web 2.0 nuestros derechos digitales se han visto atacados ante grandes multinacionales. Cuando nos identificamos ante una página web dejamos restos de nuestra identidad. Esa información es extremadamente valiosa. Desde el escándalo de Cambridge Analytica la población busca una manera de protegerse de empresas que venden sus datos. Esta empresa, mientras estaba en funcionamiento, tuvo acceso a los datos de 85 millones de usuarios de Facebook. Estos usuarios no dieron consentimiento explícito para permitir el acceso a sus datos. Cambrice Analytica (CA, en adelante) solo tenía permiso de 270000 usuarios que usaron una aplicación llamada “This Is Your Digital Life”. Dando acceso a esa aplicación externa, CA tenía acceso a la información de esa persona y a toda la red de amigos de la misma. Una clara violación de no solo los términos de uso de Facebook sino de las leyes de privacidad europeas (GDPR-
+RGPD) \cite{web:CA} . Este escándalo, entre otros muchos, es la motivación de este proyecto. En específico, nos encontramos con tres motivos éticos.
+\begin{itemize}
+    \item Cuidar la identidad y privacidad de las personas.
+    \item Establecer un sistema para evitar el robo de identidad
+    \item Crear un ecosistema para evitar la comercialización de los datos de las personas.
+\end{itemize}
+ Valorando los principios éticos antes mencionados, podemos desarrollar las siguientes normas de actuación.
+\begin{itemize}
+    \item Debe ser posible identificar a las personas sin requerir información personal.
+    \item Cualquier flujo de datos debe estar permitido por el propietario de la información.
+    \item Los datos y los usuarios deben estar protegidos.
+    \item Los datos no deben salir del navegador del usuario o usuarios sin permiso de los mismos.
+\end{itemize}
+Para poder cumplir con las normas éticas establecidas, necesitamos un sistema de identificación mínimo. Esto significa que no identificamos a los usuarios por sus datos personales sino por la dirección de su cartera. Como por ejemplo:
+\begin{quote}
+    \verb|0x3aE9Ae282F922f3dA986f3F5e69e0EFbdE9BF348|
+\end{quote}
+Esto difiere con nuestro Documento Nacional de Identidad que usamos en nuestro dia a dia, ya que aunque los dos sirven para identificarnos, el DNI contiene información personal, la cual el propietario puede no querer su divulgación. Puede que una aplicación requiera saber la edad del usuario. Para poder llegar a ese conocimiento, se debe pedir permiso al usuario. Si el usuario no permite compartir esa información, no puede usar esa aplicación.\\
+ Así mismo, gracias a este proceso podemos cumplir con la norma número 2. Todos las acciones que requieran de la información del usuario, deberán ser aprobadas.\\
+ Para asegurar que los datos de nuestros usuarios están seguros, necesitaremos asegurar la inmutabilidad de la información. Esto se puede llegar a conseguir utilizando criptografía y blockchain. Gracias a las firmas criptográficas podemos asegurar matemáticamente que el emisor de la información es quien dice ser. No solo eso si no que podemos asegurar que dos ficheros son los mismos, sin necesariamente saber su contenido. Gracias a la criptografía y la blockchain, podemos asegurar a los usuarios que están comunicándose con quien cree que lo están haciendo y que sus archivos están seguros. Estos archivos solo se pueden desencriptar por quienes sean los destinatarios de los mismos. \\
+ Por último, para poder garantizar la localización de los datos, utilizamos la descentralización. La descentralización, como ya ha sido explicado en el capítulo \ref{EdA} “Estado del arte”, significa que no existe un punto central  donde existen todos los datos. En cambio, cada uno tiene sus datos en un navegador y los puede compartir con quien desee. Esto nos garantiza que las comunicaciones son directas. No hay intermediarios en los que tener que confiar. Esto significa que nuestros datos no dejan un rastro del que preocuparse.\\
+ Trás establecer la respuesta a las normas de actuación y desarrollar la solución, hay que analizar las hipotéticas consecuencias. El uso de la criptografía es un arma de doble filo, ya que cuanto más seguro se quiere el sistema, más poder computacional es necesario. La blockchain es un claro ejemplo de este problema. Ethereum, como analizado en el capítulo \ref{EdA} “Estado del arte”, utiliza \textit{proof-of-work} (PoW – Prueba de trabajo) para garantizar la seguridad de la cadena. Esto significa que para poder verificar una nueva transacción hay que gastar recursos computacionales. \\
+ Con la creciente popularidad de las blockchain y en específico Ethereum, ha llevado a convertir \textit{proof-of-work} en una guerra armamentística. Cuanto más poder se tenga más transacciones se pueden verificar. En otras palabras, cuanto mayor es la inversión de los mineros mayor beneficio tienen. Si este proyecto consigue realizar sus objetivos, se necesitarán realizar más transacciones en la red, resultando en un mayor consumo energético que, en definitiva, concluye en contaminación asociada a la producción de energía.  Esto hace que el proyecto tenga una huella de carbono no ignorable. \\
+ Finalmente, el conflicto ético resultante inclina la balanza a rechazar esta solución. Las consecuencias éticas de este proyecto superan a los beneficios. En términos tecnológicos y como ha sido explicado anteriormente en el capítulo \ref{EdA} “Estado del arte”, puede llegar a ser solucionado. En cambio, en términos éticos, la solución expuesta en este proyecto no es ética.
+\newpage
+\thispagestyle{empty}

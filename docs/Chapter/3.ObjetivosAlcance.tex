@@ -6,51 +6,51 @@
 
 \fancyhead[LE]{\thechapter.Objetivos y Alcance}
 
-Este capitulo, se encarga de explicar los objetivos que están ligados a este proyecto, y todos los conocimientos asociados para su elaboración.
+Este capítulo se encarga de explicar los objetivos que están ligados a este proyecto y todos los conocimientos asociados para su elaboración.
 
 \begin{itemize}
-    \item Resumen ejecutivo\\Resumen general de las ideas que se quieren conseguir en el proyecto
-    \item Definición del proyecto\\Objetivos claros y extensos de lo que se quiere conseguir en el proyecto
+    \item Resumen ejecutivo.\\Resumen general de las ideas que se quieren conseguir en el proyecto.
+    \item Definición del proyecto.\\Objetivos claros y extensos de lo que se quiere conseguir en el proyecto.
 \end{itemize}
 
 \section{Resumen ejecutivo}
 Internet evoluciona constantemente y la forma de interactuar de los usuarios con ella. Desde la web 2.0, el contenido principal de todas las páginas, es el generado y proporcionado por los usuarios. Muchas empresas han crecido hasta niveles desorbitados obteniendo y comercializando toda la información posible de sus usuarios. Con la web 3.0, se le puede devolver a los usuarios toda su información y todo su contenido. Como en la vida real, todos tenemos una cartera donde guardamos nuestro dinero y nuestras identidades. Así mismo, en internet funciona igual, tienes tu dinero e identidad en una cartera. Utilizando librerías web3 podemos comunicarnos con su cartera para poder identificarlo. Generamos un DID (Decentralized IDentifier - DNI descentralizado), con la posibilidad de abrir su archivador personal y guardar datos y documentos en él, como el que solemos tener en casa. Para que el uso de la web 3.0 sea satisfactoria, hay que conseguir que sea muy fácil iniciar sesión. Después de esto, se le asignará una cookie al usuario para que los siguientes accesos sean automáticos. En este proyecto, se investigará una implementación de identidad distribuida y sostenible. Esto se realizará priorizando la facilidad de uso y maximizando la posibilidad de implementación en todo tipo de páginas. También investigaremos la posibilidad de implementar esta identificación a todo Internet, haciendo posible que estas identidades se puedan usar desde la carpeta de salud hasta en la próxima red social de éxito. Todo esto mientras los usuarios son dueños de sus datos, compartiendo solo lo que quieren y nada más.
 \section{Objetivos generales}
-El objetivo principal de este proyecto, es elaborar una solución capaz de sustituir la implementación actual de las identidades en la web 2.0 y un cambio de paradigma para respetar los datos personales de los usuarios. Así mismo, en el ámbito de uso, se investigara IPFS \cite{web:ipfs}, blockchain, orbit-db, metamask y tweetna-cl. En su funcionamiento, se expondrá como hacer funcionar todo con react y ejemplos de como escuchar a todos los eventos que nos llegan desde otros usuarios en la red. Se compararán las distintas soluciones posibles y se explicará el porque esta solución es la más optima.
-Tras en análisis de la solución propuesta, se explicará como interaccionan todas las herramientas para hacer posible el uso de SSI en la universidad de Deusto.
+El objetivo principal de este proyecto es elaborar una solución capaz de sustituir la implementación actual de las identidades en la web 2.0 y proponer un cambio de paradigma para respetar los datos personales de los usuarios. Así mismo, en el ámbito de uso, se investigará IPFS, \textit{blockchain}, OrbitDB, Metamask y TweetNa-Cl. En su funcionamiento, se expondrá cómo hacer funcionar todo con React y ejemplos de cómo escuchar todos los eventos que nos llegan desde otros usuarios en la red. Se compararán las distintas soluciones posibles y se explicará el porqué esta solución es la óptima.
+Tras el análisis de la solución propuesta, se explicará como interaccionan todas las herramientas para hacer posible el uso de SSI en la Universidad de Deusto.
 \section{Objetivos específicos}
 En este apartado se procederá a dividir el proyecto en sus diferentes objetivos para poder
-obtener el resultado deseado. A continuación de describe cada uno de los pasos a seguir para la realización de los diferentes objetivos para conseguir el objetivo mencionado en el apartado objetivos generales.
+obtener el resultado deseado. A continuación se describe cada uno de los pasos a seguir para la realización de los diferentes objetivos.
 \begin{itemize}
     \item Diseño de un sistema descentralizado y seguro utilizando herramientas open source y estándares web.
-    \item Diseño de una pagina capaz de generar DID.
+    \item Diseño de una página capaz de generar DIDs.
 \end{itemize}
 \section{Alcance}
-El objetivo principal de este proyecto, es investigar, diseñar y desarrollar una aplicación web cliente capaz de identificar a usuarios leyendo su identidad y permitir comunicar a usuarios sin necesidad de intermediarios ni un *back end* en el que confiar.
+El alcance de este proyecto es investigar, diseñar y desarrollar una aplicación web cliente capaz de identificar a usuarios leyendo su identidad y permitir comunicar a usuarios sin necesidad de intermediarios ni un \textit{backend} en el que confiar.
 
-Ante todo, se analizarán las distintas posibilidades para crear una aplicación web cliente. Se elegirán las más optimas para añadirlas al *stack* del sistema. El *front end*, la comunicación con la blockchain y comunicación con los datos del usuario. Todo esto mientras se priorizan proyectos *open source* sobre proyectos *propietarias*.
+Ante todo, se analizarán las distintas posibilidades para crear una aplicación web cliente. Se elegirán las mejores para añadirlas al \textit{stack} del sistema: el \textit{frontend}, la comunicación con la \textit{blockchain} y la comunicación con los datos del usuario. Todo esto mientras se priorizan proyectos \textit{open source} sobre soluciones \textit{propietarias}.
 
-En segundo lugar, tras haber decidido el *stack*, se comenzara el desarrollo. Se comenzara generando una red de ethereum de desarrollo y un nodo go-ipfs. De este modo, conseguiremos desarrollar la aplicación en un entorno seguro mientras se desarrolla la solución.
+En segundo lugar, tras haber decidido el \textit{stack}, se comenzará el desarrollo. Se empezará generando una red de Ethereum de desarrollo y un nodo \verb|go-ipfs|. De este modo, conseguiremos desarrollar la aplicación en un entorno seguro mientras generamos la solución.
 
-Tras haber concluido con lo anterior, se empezara a desarrollar la aplicación. Se crearan funciones generalistas capaz de ser usadas en el futuro. Estas funciones,  Se creara una interfaz de usuario para interactuar con esas funciones.
+A continuación, se empezará a desarrollar la aplicación. Se crearán funciones generalistas capaces de ser usadas en el futuro. Se diseñará una interfaz de usuario para interactuar con esas funciones.
 
-Finalmente, probaremos que todas las funciones para asegurarnos de su funcionamiento.
+Finalmente, probaremos todas las funciones para validar el proyecto.
 \subsection{Datos rápidos}
 \begin{itemize}
-    \item El alcance de este proyecto, es implementar SSI en un pagina.
-    \item El alcance de este proyecto, es implementar un smart contract para permitir a individuos comunicarse entre ellos y poder compartir información por un canal seguro.
-    \item El alcance de este proyecto, es implementar orbit-db como una base de datos distribuida y resistente.
-    \item El alcance de este proyecto, es implementar IPFS \cite{web:ipfs} para poder compartir la información entre las personas.
+    \item El alcance de este proyecto es implementar SSI en una página.
+    \item El alcance de este proyecto es implementar un \textit{smart contract} para permitir a individuos comunicarse entre ellos y poder compartir información por un canal seguro.
+    \item El alcance de este proyecto es implementar OrbitDB como una base de datos distribuida y resistente.
+    \item El alcance de este proyecto es implementar IPFS para poder compartir la información entre las personas.
 \end{itemize}
-\section{Limites del trabajo propuesto}
+\section{Límites del trabajo propuesto}
 \begin{itemize}
-    \item Este proyecto, va a intentar hacer una predicción de lo que la web 3.0 podría llegar a implementarse.
+    \item Este proyecto va a hacer una predicción de lo que la web 3.0 podría llegar a ser.
     \item Este proyecto pretender entregar un prototipo funcional que soporta SSI y transmisión de información de manera distribuida.
-    \item Este proyecto \textbf{no} va a tratar de imitar el login de Deusto.
+    \item Este proyecto \textbf{no} va a tratar de imitar el \textit{login} de Deusto.
     \item Este proyecto \textbf{no} va a implementar la funcionalidad de Alud. 
     \item Este proyecto \textbf{no} va a tratar de implementar el mismo diseño de base de datos que usa Deusto de manera interna.
-    \item Este proyecto \textbf{no} va a aportar métricas ni KPIs de los datos obtenidos.
-    \item Este proyecto \textbf{no} va a aportar teses de integración.
+    \item Este proyecto \textbf{no} va a aportar métricas ni \textit{KPIs} de los datos obtenidos.
+    \item Este proyecto \textbf{no} va a aportar \textit{teses} de integración.
 \end{itemize}
 
 \newpage
